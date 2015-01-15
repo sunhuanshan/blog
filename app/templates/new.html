@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>可乐不加冰</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="static/blog.css" rel="stylesheet">
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="static/jquery.min.js"></script>
+    <script src="static/bootstrap.min.js"></script>
+    
+    <script type="text/javascript">
+	$(document).ready(function(){
+		$('#submit_id').click(function(){
+			//alert('添加文章');
+			var title = $('#title_id').val();
+			var group = $('#group_id').val();
+			var content = $('#content_id').val();
+			if(title == ''){
+				alert('请输入标题');
+				return false;
+			}
+			if(group == ''){
+				alert('请添加标签');
+				return false;
+			}
+			if(content == ''){
+				alert('请添加正文');
+				return false;
+			}
+			var param = jQuery.param({title: title, group: group, content: content});
+			$.ajax({
+				async:true,
+				url:'article/addarticle',
+				data: param,
+				method: 'POST',
+				dataType: 'json',
+				success: function(resp){
+					if(!resp['success']){
+						alert(resp['detail']);
+						return false;
+					}
+					alert(resp['detail']);
+					window.location.replace("/index");
+				},
+				error:function(xhr,error){
+					console.log(xhr);
+					console.log(error);
+				}
+			});
+		});
+	});
+    </script>
+  </head>
+  <body>
+      <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <a id = 'home_id' class="blog-nav-item " href="index">首页</a>
+          <a id = 'new_id' class="blog-nav-item active" href="article/new">新文章</a>
+          <a id = 'about_id' class="blog-nav-item" href="#">关于</a>
+        </nav>
+      </div>
+    </div>
+    <div class="container">
+  		<form role="form">
+  			<div class="form-group">
+    			<label for="title">标题</label>
+    			<input type="text" class="form-control" id="title_id" placeholder="标题/title">
+ 			</div>
+  			<div class="form-group">
+    			<label for="group">标签</label>
+    			<input type="text" class="form-control" id="group_id" placeholder="标签/group">
+ 			</div>
+ 			<div class="form-group">
+    			<label for="content">正文</label>
+  				<textarea class="form-control" rows="20" id = "content_id"></textarea>
+  			</div>
+  			<button id="submit_id" type="button" class="btn btn-default">提交</button>
+		</form>
+	</div>
+  </body>
+ </html>
