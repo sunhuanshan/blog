@@ -140,12 +140,17 @@ def addArticle():
         title = request.form['title']
         group = request.form['group']
         content = request.form['content']
-        if title and group and content:
-            artService.addArticle(title, group, content)
-            resp['success'] = True
-            resp['detail'] = '发表文章成功'
+        key = requst.form['key']
+        if key or key != 'sun123':
+            resp['success'] = False
+            resp['detail'] = '提交码错误，无法提交'
         else:
-            raise Exception('parameter error')
+            if title and group and content:
+                artService.addArticle(title, group, content)
+                resp['success'] = True
+                resp['detail'] = '发表文章成功'
+            else:
+                raise Exception('parameter error')
     except Exception, e:
         resp['success'] = False
         resp['detail'] = '%s' % e

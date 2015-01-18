@@ -29,6 +29,7 @@
 			var title = $('#title_id').val();
 			var group = $('#group_id').val();
 			var content = $('#content_id').val();
+      var key = $('#key_id').val();
 			if(title == ''){
 				alert('请输入标题');
 				return false;
@@ -37,6 +38,10 @@
 				alert('请添加标签');
 				return false;
 			}
+      if(key == ''){
+        alert('请输入提交码');
+        return false;
+      }
 			if(content == ''){
 				alert('请添加正文');
 				return false;
