@@ -141,7 +141,8 @@ def addArticle():
         group = request.form['group']
         content = request.form['content']
         key = request.form['key']
-        if key or key != 'sun123':
+        logger.debug('key:' + key)
+        if key or not key == 'sun123':
             resp['success'] = False
             resp['detail'] = '提交码错误，无法提交'
         else:
