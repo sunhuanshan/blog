@@ -46,7 +46,7 @@
 				alert('请添加正文');
 				return false;
 			}
-			var param = jQuery.param({title: title, group: group, content: content});
+			var param = jQuery.param({title: title, group: group, content: content, key: key});
 			$.ajax({
 				async:true,
 				url:'article/addarticle',
