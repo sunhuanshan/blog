@@ -140,7 +140,7 @@ def addArticle():
         title = request.form['title']
         group = request.form['group']
         content = request.form['content']
-        key = requst.form['key']
+        key = request.form['key']
         if key or key != 'sun123':
             resp['success'] = False
             resp['detail'] = '提交码错误，无法提交'
