@@ -141,9 +141,9 @@ def addArticle():
         group = request.form['group']
         content = request.form['content']
         key = request.form['key']
-        print 'key: %s' % key
-        '''
-        if key or not key == 'sun123':
+        #print 'key: %s' % key
+        
+        if  not key.encode('utf8') == 'sun123':
             resp['success'] = False
             resp['detail'] = '提交码错误，无法提交'
         else:
@@ -160,6 +160,7 @@ def addArticle():
             resp['detail'] = '发表文章成功'
         else:
             raise Exception('parameter error')
+        '''
     except Exception, e:
         resp['success'] = False
         resp['detail'] = '%s' % e

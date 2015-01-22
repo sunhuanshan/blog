@@ -21,15 +21,32 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="static/jquery.min.js"></script>
     <script src="static/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="static/themes/default/default.css" />
+	<script charset="utf-8" src="static/kindeditor-min.js"></script>
+	<script charset="utf-8" src="static/lang/zh_CN.js"></script>
     
     <script type="text/javascript">
+    /*
+    var editor;
+	KindEditor.ready(function(K) {
+		editor = K.create('textarea[name="content"]', {
+			allowFileManager : true
+		});
+	});
+	*/
+	
 	$(document).ready(function(){
+		var editor = KindEditor.create(
+				'textarea[name="content"]',
+				{allowFileManager : true}
+		);
+		
 		$('#submit_id').click(function(){
 			//alert('添加文章');
 			var title = $('#title_id').val();
 			var group = $('#group_id').val();
-			var content = $('#content_id').val();
-      var key = $('#key_id').val();
+			var content = editor.html();
+      		var key = $('#key_id').val();
 			if(title == ''){
 				alert('请输入标题');
 				return false;
@@ -96,10 +113,12 @@
       </div>
  			<div class="form-group">
     			<label for="content">正文</label>
-  				<textarea class="form-control" rows="20" id = "content_id"></textarea>
+    			
+  				<textarea name="content" class="form-control" rows="20" id = "content_id"></textarea>
   			</div>
   			<button id="submit_id" type="button" class="btn btn-default">提交</button>
 		</form>
+		
 	</div>
   </body>
  </html>
