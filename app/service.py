@@ -15,7 +15,6 @@ class ArticleService():
             articles = self.articleDao.getArticles()
             for art in articles:
                 jart = JArticle(art, False)
-                print jart
                 jarticles.append(jart)
         except Exception, e:
             raise Exception(e)

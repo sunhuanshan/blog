@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>可乐不加冰</title>
+    <title>孙焕山</title>
 
     <!-- Bootstrap core CSS -->
     <link href="static/bootstrap.min.css" rel="stylesheet">
@@ -24,25 +24,40 @@
 	<link rel="stylesheet" href="static/themes/default/default.css" />
 	<script charset="utf-8" src="static/kindeditor-min.js"></script>
 	<script charset="utf-8" src="static/lang/zh_CN.js"></script>
+	<script charset="utf-8" src="static/jquery.form.js"></script>
     
     <script type="text/javascript">
-    /*
-    var editor;
-	KindEditor.ready(function(K) {
-		editor = K.create('textarea[name="content"]', {
-			allowFileManager : true
-		});
-	});
-	*/
 	
 	$(document).ready(function(){
 		var editor = KindEditor.create(
 				'textarea[name="content"]',
-				{allowFileManager : true}
+				{
+					resizeType : 1,
+					allowPreviewEmoticons : false,
+					allowImageUpload : false,
+					items : [
+						'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+						'insertunorderedlist', '|', 'emoticons', 'link']}
 		);
 		
+		$('#submit_image_id').click(function(){
+			$('#upload_modal').modal('show');			
+		});
+		
+		$('#upload_form_id').ajaxForm({
+			beforeSubmit:function(){
+			},
+			success: function(resp){
+				if(!resp['success']){
+					alert(resp['detail']);
+				}else{
+					$('#upload_modal').modal('hide');
+				}
+			}
+		});
+		
 		$('#submit_id').click(function(){
-			//alert('添加文章');
 			var title = $('#title_id').val();
 			var group = $('#group_id').val();
 			var content = editor.html();
@@ -113,12 +128,27 @@
       </div>
  			<div class="form-group">
     			<label for="content">正文</label>
-    			
   				<textarea name="content" class="form-control" rows="20" id = "content_id"></textarea>
   			</div>
   			<button id="submit_id" type="button" class="btn btn-default">提交</button>
-		</form>
-		
+  			<button id="submit_image_id" type="button" class="btn btn-default">上传相关图片</button>
+	 </form>
+	 <!-- 上传文件模态框  -->
+	 <div class="modal" id="upload_modal">
+	 <div class="modal-dialog">
+	 	<div class="modal-content">
+		<div class="modal-body">	
+			<form id="upload_form_id" class="form-horizontal" action ="/upload" enctype = "multipart/form-data" method = "post">
+				<label for="exampleInputFile">上传图片</label>
+				<div class="form-group upload" >
+					<input type = "file" name = 'file' id = "image_id">
+				</div>
+				<button type="submit" class="btn btn-default">提交</button>
+			</form>
+		</div>
+		</div>
 	</div>
+	</div>
+	</div> 
   </body>
  </html>

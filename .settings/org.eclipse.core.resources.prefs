@@ -1,3 +1,10 @@
 eclipse.preferences.version=1
+encoding//app/__init__.py=utf-8
+encoding//app/jmodels.py=utf-8
+encoding//app/service.py=utf-8
+encoding//app/util.py=utf-8
 encoding//app/views.py=utf-8
+encoding/config.py=utf-8
 encoding/run.py=utf-8
+encoding/test.py=utf-8
+encoding/test_article.py=utf-8

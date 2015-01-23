@@ -7,6 +7,11 @@ body {
   color: #555;
 }
 
+blog-img {
+	width:300px;
+}
+
+
 h1, .h1,
 h2, .h2,
 h3, .h3,
@@ -261,6 +266,9 @@ h6, .h6 {
 	font-weight:bold;
 	padding-top:30px;
 	
+}
+.upload{
+	padding-left:10px;
 }
 
 .article-info{

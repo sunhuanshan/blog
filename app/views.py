@@ -1,11 +1,18 @@
 # -*- coding: utf-8 -*-
-from flask import render_template, jsonify, request, url_for
+import os
+import mimetypes
+import util
+from flask import Flask, render_template, jsonify, request, url_for
 from app import app
 from service import ArticleService, GroupService
 from logger import logger
 from jmodels import MyJSONEncoder
 from werkzeug import responder
 from app.service import CommentService
+from tempfile import mktemp
+from werkzeug import secure_filename
+from config import UPLOAD_FOLDER, ALLOWED_EXTENSIONS
+from fileinput import filename
 
 app.json_encoder = MyJSONEncoder
 
@@ -141,26 +148,42 @@ def addArticle():
         group = request.form['group']
         content = request.form['content']
         key = request.form['key']
-        #print 'key: %s' % key
-        
+        recontent = util.replaceImage(content)   
+        print recontent     
         if  not key.encode('utf8') == 'sun123':
             resp['success'] = False
             resp['detail'] = '提交码错误，无法提交'
         else:
-            if title and group and content:
-                artService.addArticle(title, group, content)
+            if title and group and recontent:
+                artService.addArticle(title, group, recontent)
                 resp['success'] = True
                 resp['detail'] = '发表文章成功'
             else:
                 raise Exception('parameter error')
-        '''
-        if title and group and content:
-            artService.addArticle(title, group, content)
-            resp['success'] = True
-            resp['detail'] = '发表文章成功'
+    except Exception, e:
+        resp['success'] = False
+        resp['detail'] = '%s' % e
+    return jsonify(resp)
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+    
+@app.route('/upload', methods = ['GET', 'POST'])
+def loadImage():
+    resp = {}
+    try:
+        if request.method == 'POST':
+            file = request.files['file']
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                filePath = os.path.join(UPLOAD_FOLDER, filename)
+                file.save(filePath)
+                resp['success'] = True
+                resp['detail'] = '上传图片成功'
+            else:
+                raise Exception('上传文件格式不正确')
         else:
-            raise Exception('parameter error')
-        '''
+            raise('无法处理get方法')
     except Exception, e:
         resp['success'] = False
         resp['detail'] = '%s' % e

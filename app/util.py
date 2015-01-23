@@ -29,4 +29,9 @@ def creatLeading(content):
                     flag = False
     else:
         leading = content
-    return leading 
+    return leading
+
+def replaceImage(content):
+    recontent = content.replace('&lt;image&gt;', '<div align="center"><br><img class = "blog-img" src="static/imag/')
+    content = recontent.replace('&lt;/image&gt;', '"</img></div><br>') 
+    return content

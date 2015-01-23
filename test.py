@@ -4,7 +4,6 @@ from app.dao import  ArticleDao, AuthorDao, GroupDao, CommentDao
 from app.models import Article, Author, Group, Comment
 from app import util
 from pip._vendor.requests.models import CONTENT_CHUNK_SIZE
-from winioctlcon import GPT_ATTRIBUTE_PLATFORM_REQUIRED
 from test_article import CONTENT, TITLE
 
 class Test():
@@ -78,18 +77,23 @@ class Test():
         artId = 1
         com = self.commentDao.getCommentsByArticleId(artId)
         print com
-            
+    
+    def test_image_content(self):
+        content = u'我们来了到了那里<image>abcedff.jpg</image>'
+        print util.replaceImage(content)
+        
 if __name__ == "__main__":
     test = Test()
     #test.test_add_author()
-    test.test_get_author()
-    test.test_remove_articles()
+    #test.test_get_author()
+    #test.test_remove_articles()
     #test.test_leading()
     #test.test_add_group()
-    test.test_get_groups()
+    #test.test_get_groups()
     
     #test.add_art()
-    test.get_articles()
+    #test.get_articles()
     
     #test.test_add_comment()
-    test.test_get_comment()
+    #test.test_get_comment()
+    test.test_image_content()
