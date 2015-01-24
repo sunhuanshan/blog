@@ -44,7 +44,7 @@ class ArticleDao():
     
     def getArticles(self):
         try:
-            articles = Article.query.all()
+            articles = Article.query.order_by(Article.create_time.desc()).all()
             return articles
         except Exception, e:
             logger.error(' get articles error %s', e)
