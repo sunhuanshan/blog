@@ -148,8 +148,7 @@ def addArticle():
         group = request.form['group']
         content = request.form['content']
         key = request.form['key']
-        recontent = util.replaceImage(content)   
-        print recontent     
+        recontent = util.replaceImage(content)        
         if  not key.encode('utf8') == 'sun123':
             resp['success'] = False
             resp['detail'] = '提交码错误，无法提交'
