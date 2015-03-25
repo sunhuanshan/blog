@@ -1,0 +1,358 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>文章</title>
+</head>
+<body>
+<p><b><h3>1.树的基本概念</h3></b></p>
+<p><b>树</b>:树是N(n>0)个结点的有限集合，其唯一关系具有下列属性：集合中存在唯一的一个结点，称为树根，该节点没有前趋；除根节点外，其余结点分别为M(M>=0)个互不相交的结合，其中每一个集合都是一棵树，并称其为根的子树。</p>
+<p>一个结点的子树个数称为该结点的度(degree)，一棵树中结点度的最大值称为该树的度，度为零的结点称为叶子(leaf)或者终端结点。度不为零的结点称为分支结点或者非终端结点，除根结点之外的分支结点统称为内部结点。</p>
+<p>树中结点的后继结点称为儿子(child)或者儿子结点，简称儿子；结点的前趋结点称为儿子的双亲(parenets)或者父亲结点，简称父亲，同一个父亲的儿子胡称为兄弟(sibling)。若树中存在一个结点序列k1k2k3...kj，使得ki是k(i+1)的父亲(1<=i<j)，则称该节点序列是从k1到kj的一条路径(path)或者道路，路径的长度等于j-1，是路径所经过的所有边(连接两个结点的路段)的数目。</p>
+<p>若树中结点k到ks存在一条路径，则称k是ks的祖先(Ancestor)，ks是k的子孙(descendant)。树的层数(level)是从根结点开始计算，树中结点的最大层数称为树的高度(height)或者深度(depth)。若树中每个结点的各子树看成从左到右有次序，则该树为有向树(ordered tree)，否则称为无向树(unordered tree)。</p>
+<p><b>二叉树:</b>是由n(n>=0)结点组成的有限结合，此集合或者为空，或者由一个根结点加上两棵分别称为左右子树的，互不相交的二叉树组成。</p>
+<p><b><h3>2.二叉树的性质</h3></b><p>
+<p><b>性质1:</b>二叉树第i(i>=1)层上的结点数最多为2^(i-1)；</p>
+<p><b>性质2:</b>高度为k的二叉树最多有2^k - 1 个结点；</p>
+<p><b>性质3:</b>对于任何二叉树T，设n0,n1,n3分别表示度为0，1，2的结点个数，则n0=n2+1</p>
+<p><b>满二叉树:</b>一棵深度为k且有2^k-1个结点的二叉树称为满二叉树</p>
+<p><b>完全二叉树:</b>在满二叉树的最下一层上从右边开始连续删除若干结点后得到的二叉树</p>
+<p><b>性质4:</b>具有n个结点的完全二叉树(包括完全二叉树)的高度为|log2 n|+1  或者 |log2 (n+1)|</p>
+<p><b>性质5:</b>非空满二叉树的叶结点数等于其分支结点树加1</p>
+<p><b>性质6:</b>一棵非空二叉树空子树的数目等于其结点数目加1</p>
+<p><b><h3>3.二叉树的存储结构</h3></b></p>
+<p><b><h4>3.1二叉树的顺序存储结构</h4></b></p>
+<p>二叉树的顺序存储结构是把二叉树的所有结点按照一定的次序存储到一组包含n个存储单元的存储空间中。在二叉树的顺序存储结构中只存储结点的值(数据域)，不存储结点之间的逻辑关系，结点之间的逻辑关系由数组中下标的顺序体现。</p>
+<p>不管给定的二叉树是不是完全二叉树，都看作完全二叉树，即按完全二叉树的层次次序（从上到下，从左到右）把各结点依次存入数组中。<p>
+<pre>
+					    A
+					  /   \
+					B       C                
+					 \        \
+					  D        E
+					 /           \
+					F             G 
+
+            1  2  3  4  5  6  7  8  9  10  11  12  13  14  15
+           ---------------------------------------------------
+           |A |B |C |  |D |  |E |  |   |F |  |  |  |  |   |G |
+           ---------------------------------------------------
+</pre>
+<p>在顺序结构中，由某结点的存储单元地址可以推出其父亲、左儿子、右儿子及兄弟的地址，假设给定结点的地址为I，则:</p>
+<p>(1) 若I=1，则该结点为根结点，无父亲；</p>
+<p>(2) 若I!=1，则该节点的父亲结点为I/2的整数部分；</p>
+<p>(3) 若2×I<=n，则该结点的左儿子结点地址为2×I吗，否则该结点无左儿子；</p>
+<p>(4) 若2×I+1<=n，则该结点的右儿子结点地址为2×I+1，否则该结点无右儿子；</p>
+<p>(5) 若I为奇数（不为1），则该结点的左兄弟为I-1；</p>
+<p>(6) 若I为偶数（不为n），则该结点的右兄弟为I+1；</p>
+<p>顺序存储结构的优点在于能使用结点在数组中的相对位置表示结点之间的逻辑关系，但当二叉树为非完全二叉树时，就会造成存储空间的浪费。最坏的情况下，一个高度为k且只有k个结点的右单支树需要2^k-1个结点的存储空间。</p>
+<p><b><h4>3.2二叉树的链接存储结构</h4></b></p>
+<p>顺序存储结构会造成大量存储空间的浪费，一般二叉树的存储结构更多的采用链接的方式。二叉树的链接存储中每个结点由数据域和指针域两部分组成，指针域有两个，一个指向左儿子，一个指向右儿子，此外还需要一个链表的头指针指向根节点。二叉树的链接存储结构成为二叉链表。</p>
+<pre>
+				 ---------------------------------
+				| Lchild  |  Data   |   Rchild    |
+				 ---------------------------------</pre>
+<p>n个结点的二叉树中，一共有2n个指针域，其中只有n-1个用来指示结点的左右儿子，其余的n+1个指针域为空。</p>
+<p><h3>4二叉树的抽象数据类型</h3></p>
+<p>首先，给出二叉树的抽象数据接口:</p>
+<pre>
+package com.sunhuanshan.tree;
+
+public interface BinNode {
+
+	//返回并设置元素值
+	public Object element();
+	public Object setElement(Object v);
+	
+	//返回并设置左孩子
+	public BinNode left();
+	public BinNode setLeft(BinNode p);
+	
+	//返回并设置右孩子
+	public BinNode right();
+	public BinNode setRight(BinNode p);
+	
+	//判断是否为叶结点
+	public boolean isLeaf();
+}
+</pre>
+<p>实现一个二叉树结点类BinNodePtr的声明：
+<pre>
+package com.sunhuanshan.tree;
+
+public class BinNodePtr implements BinNode {
+
+	//结点对象
+	private Object element;
+	//左儿子
+	private BinNode left;
+	//右儿子
+	private BinNode right;
+
+	//创建结点1
+	public BinNodePtr(){
+		left = right = null;
+	}
+
+	//创建结点2
+	public BinNodePtr(Object val){
+		element = val;
+		left = right = null;
+	}
+
+	//创建结点3
+	public BinNodePtr(Object val, BinNode left, BinNode right){
+		this.element = val;
+		this.left = left;
+		this.right = right;
+	}
+	
+	@Override
+	public Object element() {
+		return element;
+	}
+
+	@Override
+	public Object setElement(Object v) {
+		return element = v;
+	}
+
+	@Override
+	public BinNode left() {
+		return left;
+	}
+
+	@Override
+	public BinNode setLeft(BinNode p) {
+		return left = p;
+	}
+
+	@Override
+	public BinNode right() {
+		return right;
+	}
+
+	@Override
+	public BinNode setRight(BinNode p) {
+		return right = p;
+	}
+
+	@Override
+	public boolean isLeaf() {
+		return  (left == null) && (right == null);
+	}
+
+}
+</pre>
+<p><b><h3>5.实现一个二叉树</h3></b></p>
+<p><b><h4>5.1二叉树的实现原则:</h4></b></p>
+<p>1) 以第一个建立的元素为根结点。</p>
+<p>2) 依次序将元素与根结点进行比较，若元素值大于根结点值，则将元素值向根结点的右子结点移动，若此右子结点为空，则将该元素值插入，否则就重复比较，直到找到适当的空结点为止。若元素值小于根结点值，则将元素值向根结点的左子结点移动，若此左子结点为空，则将元素值插入；否则就重复比较，直到找到合适的空结点为止。</p>
+<p><b>5.2以数组方式实现二叉树</b></p>
+<pre>
+package com.sunhuanshan.tree;
+/**二叉树实现类**/
+public class BiTreeArray{
+	
+	static final int MaxSize = 32;
+	int[] ABiTree = new int[MaxSize];
+	
+	public BiTreeArray(){
+		for (int i=0; i < MaxSize; i++){
+			ABiTree[i] = 0;
+		}
+	}
+	
+	//建立二叉树
+	public void create(int data){
+		int i = 0;
+		//层数从1开始
+		int level = 1;
+		
+		while(ABiTree[level] != 0){//判断该层是否存在子树
+			  if (data < ABiTree[level] ){
+				  level = 2 * level; 
+			  } else {
+				  level = 2 * level + 1;
+			  }
+		}
+		ABiTree[level] = data;
+	}
+	
+	//输出二叉树的结点值
+	public void printAll(){
+		System.out.println("二叉树的结点值依次是");
+		for (int i = 0; i < MaxSize; i ++){
+			System.out.println("Node " + i + " : " + ABiTree[i]);
+		}
+	}
+}
+</pre>
+<p>验证二叉树是否正确：</p>
+<pre>
+package com.sunhuanshan.tree;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+
+public class BiTree01 {
+	
+	public static void main(String[] args) throws NumberFormatException, IOException{
+		int i;
+		int index = 1;
+		int data;
+		BiTreeArray biTree = new BiTreeArray();	
+		System.out.println("请输入二叉树数据元素(输入0退出)");
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		do{
+			data = Integer.parseInt(reader.readLine());
+			biTree.create(data);
+		}while(data != 0);
+		biTree.printAll();
+		
+	}
+}
+</pre>
+<p>依次输入：7 4 7 8 3 4 9 5 8 10  0</p>
+<p>二叉树的结点值依次是Node 0 : 0, Node 1 : 7, Node 2 : 4, Node 3 : 7, Node 4 : 3, Node 5 : 4, Node 6 : 0, Node 7 : 8, Node 8 : 0, Node 9 : 0, Node 10 : 0, Node 11 : 5, Node 12 : 0, Node 13 : 0, Node 14 : 0, Node 15 : 9, Node 16 : 0, Node 17 : 0, Node 18 : 0, Node 19 : 0, Node 20 : 0, Node 21 : 0, Node 22 : 0, Node 23 : 0, Node 24 : 0, Node 25 : 0, Node 26 : 0, Node 27 : 0, Node 28 : 0, Node 29 : 0, Node 30 : 8, Node 31 : 10
+</p>
+<p><b>5.3以数组方式实现二叉树的链接存储</b></p>
+<p>定义一个类，包含三个字段，data用于存放结点的数据值，lchild存放左儿子结点在数组中的下标，字段rchild存放右儿子结点在数组中的下标。</p>
+<p>在结点数组中，会将根结点置于数组结构中下标为0处，若结点值存在element，而left与right字段则分别存储左右子节点在数组结构中的下标，若子结点不存在则存值-1。</p>
+<pre>
+            A         --------------------------------
+          /   \       |下标 | lchild | data | rchild |
+         B     C      |  0  |    1   |  A   |   2    |
+          \   /       |  1  |   -1   |  B   |   3    |  
+           D E        |  2  |    4   |  C   |  -1    |
+                      |  3  |   -1   |  D   |  -1    |
+                      |  4  |   -1   |  E   |  -1    |
+                      --------------------------------
+</pre>
+<p>构建链接存储的二叉树:</p>
+<pre>
+package com.sunhuanshan.tree;
+//以数组的形式实现二叉树的链接存储
+public class BiTree {
+	
+	static final int Max_Size = 16;
+	
+	int[] treeData = new int[Max_Size];
+	int[] rightNode = new int[Max_Size];
+	int[] leftNode = new int[Max_Size];
+	
+	
+	//初始化数组
+	public BiTree(){
+		for (int i=0 ; i < Max_Size ; i++){
+			treeData[i] = 0;
+			leftNode[i] = -1;
+			rightNode[i] = -1;
+		}
+	}
+	//添加元素
+	public void create(int data){
+		int level = 0 ; //树的层数
+		int position = 0;
+		int i = 0;
+		for(i=0; treeData[i] != 0; i ++);
+		treeData[i] = data;
+		while(true){
+			//判断左子树还是右子树
+			if(data > treeData[level]){
+				//右子树是否有下一层
+				if(rightNode[level] != -1){
+					level = rightNode[level];
+				}else{
+					position = -1;
+					break;
+				}
+			}else{
+				if(leftNode[level] != -1){
+					level = leftNode[level];
+				}else{
+					position = 1;
+					break;
+				}
+			}	
+		}
+		if(position == 1){//建立结点的左右连接
+			leftNode[level] = i;
+		}else{
+			rightNode[level] = i;
+		}
+	}
+	
+	//打印所有的结点
+	public void printAll(){
+		int i ;
+		System.out.println("二叉树的终点值:");
+		System.out.println("   [lchild]    [data]    [rchild] ");
+		for(i=0 ; i < Max_Size; i ++){
+			System.out.print("Node" + i);
+			System.out.print("   [" + leftNode[i] + "]");
+			System.out.print("   [" + treeData[i] + "]");
+			System.out.println("   [" + rightNode[i] + "]");
+		}
+	}
+	
+}
+</pre>
+<p>验证二叉树</p>
+<pre>
+package com.sunhuanshan.tree;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class BiTree02 {
+	public static void main(String args[]) throws NumberFormatException, IOException{
+		int i;
+		int index = 1;//数组下标变量
+		int data;
+		BiTree biTree = new BiTree();
+		
+		System.out.println("请输入二叉树结点值(输入0退出):");
+		
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		data = Integer.parseInt(reader.readLine());
+		biTree.treeData[0] = data;
+		index ++ ;
+		while(true){
+			data = Integer.parseInt(reader.readLine());
+			if(data == 0){
+				break;
+			}
+			biTree.create(data);
+			index ++;
+		}
+		biTree.printAll();
+	}
+}
+</pre>
+<p>输入:12 5 15 10 6 19 16 0</p>
+<p>二叉树的终点值:
+   [lchild]    [data]    [rchild] 
+Node0   [1]   [12]   [2]
+Node1   [-1]   [5]   [3]
+Node2   [-1]   [15]   [5]
+Node3   [4]   [10]   [-1]
+Node4   [-1]   [6]   [-1]
+Node5   [6]   [19]   [-1]
+Node6   [-1]   [16]   [-1]
+Node7   [-1]   [0]   [-1]
+Node8   [-1]   [0]   [-1]
+Node9   [-1]   [0]   [-1]
+Node10   [-1]   [0]   [-1]
+Node11   [-1]   [0]   [-1]
+Node12   [-1]   [0]   [-1]
+Node13   [-1]   [0]   [-1]
+Node14   [-1]   [0]   [-1]
+Node15   [-1]   [0]   [-1]
+</p>
+<p><h3>小结</h3><p>
+<p>本文对树与二叉树有了一个简单的认识，总结归纳了树的基本特征，另外对二叉树的实现方式进行了设计和测试。</p>
+</body>
+</html>
