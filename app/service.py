@@ -100,7 +100,7 @@ class ArticleService():
             print '%s %s' % (strBegin, strEnd)
             articles =  self.articleDao.getArticlesByTime(int(beginTime), int(endTime))
             for art in articles:
-                jart = JArticle(art, True)
+                jart = JArticle(art, False)
                 jarticles.append(jart)
         else:
             raise Exception( 'time is none')
