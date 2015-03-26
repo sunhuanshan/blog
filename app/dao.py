@@ -63,7 +63,18 @@ class ArticleDao():
             return article
         except Exception, e:
             logger.error(' get article by title error %s', e)
-            
+    
+    def getArticlesByTime(self, timeBegin, timeEnd):
+        try:
+            arts = []
+            articles = self.getArticles()
+            for art in articles:
+                if (art.create_time >=  timeBegin) and (art.create_time < timeEnd) :
+                    arts.append(art)
+            return arts
+        except Exception, e:
+            logger.error(' get article by create time error %s', e)
+    
     def removeArticle(self, title):
         try:
             articles = Article.query.filter_by(title = title).all()

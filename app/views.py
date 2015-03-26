@@ -64,8 +64,9 @@ def articleDetail():
     
     return jsonify(resp)
 
-@app.route('/article/groups', methods = ['GET', 'POST'])
-def getGroups():
+#获取标签
+@app.route('/article/tags', methods = ['GET', 'POST'])
+def getTags():
     resp = {}
     try:
         groups = gpService.getGroups()
@@ -75,6 +76,20 @@ def getGroups():
         logger.error('get groups error %s' % e)
         resp['success'] = False
         resp['detail'] = '获取分组失败'
+    return jsonify(resp)
+
+#获取分组，按文章的月份进行分组
+@app.route('/article/groups', methods = ['GET', 'POST'])
+def getGroups():
+    resp = {}
+    try:
+        timesGroups = artService.getTimeGroups()
+        resp['success'] = True
+        resp['items'] = timesGroups
+    except Exception, e:
+        logger.error('get time groups error %s' % e)
+        resp['success'] = False
+        resp['detail'] = '获取时间分组失败失败'
     return jsonify(resp)
 
 @app.route('/article/comment', methods = ['GET', 'POST'])
@@ -114,8 +129,8 @@ def addComment():
         resp['detail'] = '评论失败，请重试。'
     return jsonify(resp)
 
-@app.route('/article/articleByGroup', methods = ['GET', 'POST'])
-def articleByGroup():
+@app.route('/article/articleByTag', methods = ['GET', 'POST'])
+def articleByTag():
     resp = {}
     try:
         groupId = request.form['id']
@@ -134,6 +149,28 @@ def articleByGroup():
         resp['success'] = False
         resp['detail'] = '获取文章失败'
         logger.error('get articles by group error %s' % e)
+    return jsonify(resp)
+
+@app.route('/article/articleByTime', methods = ['GET', 'POST'])
+def articleByTime():
+    resp = {}
+    try:
+        time = request.form['time']
+        if time:
+            arts = artService.getArticlesByTime(time)
+            if arts and len(arts) > 0:
+                resp['success'] = True
+                resp['items'] = arts
+                resp['size'] = len(arts)
+            else:
+                resp['success'] = False
+                resp['detail'] = '该分组无文章'
+        else:
+            raise Exception('parameter error')
+    except Exception, e:
+        resp['success'] = False
+        resp['detail'] = '获取文章失败'
+        logger.error('get articles by time error %s' % e)
     return jsonify(resp)
 
 @app.route('/new', methods = ['GET', 'POST'])

@@ -68,7 +68,44 @@ class ArticleService():
                 self.articleDao.addArticle(article)
         except Exception, e:
             raise Exception(e)
-        
+    
+    #按月份对时间进行分组
+    def getTimeGroups(self):
+        timeGroups = {}
+        articles = self.articleDao.getArticles()
+        for art in articles:
+            if art.create_time > 0:
+                time = util.monthFromStamp(art.create_time)
+                if timeGroups.has_key(time):
+                    timeGroups[time] = timeGroups[time] + 1
+                else:
+                    timeGroups[time] = 1
+        return timeGroups
+    
+    def getArticlesByTime(self, time):
+        beginTime = 0
+        endTime = 0
+        jarticles = []
+        if time:
+            #获取month
+            month = '0'
+            times = time.split('-')
+            if len(times) > 0:
+                month = times[1]
+            days = util.daysFromMonth(month)
+            strBegin = '%s-01 00:00:00' % time
+            strEnd = '%s-%02d 00:00:00' % (time, days)
+            beginTime = util.getTimesampFromDate(strBegin)
+            endTime = util.getTimesampFromDate(strEnd)
+            print '%s %s' % (strBegin, strEnd)
+            articles =  self.articleDao.getArticlesByTime(int(beginTime), int(endTime))
+            for art in articles:
+                jart = JArticle(art, True)
+                jarticles.append(jart)
+        else:
+            raise Exception( 'time is none')
+        return jarticles
+    
 class GroupService():
     def __init__(self):
         self.groupDao =  GroupDao()

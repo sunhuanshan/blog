@@ -26,8 +26,10 @@
 	$(document).ready(function(){
     		var url= 'article/list';
     		var gurl = 'article/groups'
+    		var turl = "article/tags"
         	var param = jQuery.param({});
     		getArticles(param, url);
+    		getTags(turl);
     		getGroups(gurl);
     		
     		function getGroups(url){
@@ -41,19 +43,46 @@
     						alter(resp['detail']);
     					}
     					var items = resp['items'];
-    					var titHtml = ''
-    					for(var i = 0; i < items.length; i++){
-    						titHtml = titHtml + '<li class="list-group-item"><a href="javascript:void(0)" group_id="' 
-    								+ items[i]['id'] +'" class ="btn key-group">'
-    								+ items[i]['name'] + '&nbsp;&nbsp;' + '<span class="badge">' + items[i]['count']
-    								+ '</span> </a>'+ '</li>';
+    					var titHtml = '';
+    					if (items){
+    						//console.log(items);
+    						for(var time in items){
+    							//console.log(time);
+        						titHtml = titHtml + '<li class="list-group-item"><a href="javascript:void(0)" time_id="' 
+        								+ time +'" class ="btn key-group">'
+        								+ time + '&nbsp;&nbsp;' + '<span class="badge">' + items[time]
+        								+ '</span> </a>'+ '</li>';
+    						}
     					}
     					$('#group_id').html('');
     					$('#group_id').append(titHtml);
     				}
     			});	
     		}
-
+			
+    		function getTags(url){
+    			$.ajax({
+    				async : true,
+    				method : 'POST',
+    				url : url,
+    				dataType : 'json',
+    				success : function(resp) {
+    					if(!resp['success']){
+    						alter(resp['detail']);
+    					}
+    					var items = resp['items'];
+    					var titHtm = '';
+    					for (var i = 0; i < items.length; i ++) {
+    						var tag = items[i];
+    						titHtm += '<a class = "key-tag" id = "' + tag.id + '" href="javascript:void(0)">' + '<span style="font-size:' + (15 + tag.count*3) + 'px;">' + tag.name + '</span>' + '</a>&nbsp;&nbsp;';
+    					}
+    					//console.log(titHtm);
+    					$('#tag_id').html('');
+    					$('#tag_id').append(titHtm);
+    				}
+    			});
+    		}
+    		
     		function getArticles(param, url){
     			$.ajax({
     				async : true,
@@ -71,7 +100,7 @@
     					for(var i = 0; i < items.length; i++){
     						var art = items[i];
     						var id = art['id'];
-    						console.log('artId:' + id);
+    						//console.log('artId:' + id);
     						var title = art['title'];
     						var author = art['author'];
     						var leading = art['leading'];
@@ -79,7 +108,7 @@
     						var clickCount = art['clicks'];
     						var comments = art['comments'];
     						artHtml = artHtml +　'<div id = "article_id_' + id +'" class="clear blog-post">'
-    								+ '<h2 class="blog-post-title">' + '<a class="btn btn-large key-open" href="javascript:void(0)" art_id="' + id + '">' + title + '</a></h2>' 
+    								+ '<h2 class="blog-post-title">' + '<a class="btn btn-large key-open title" href="javascript:void(0)" art_id="' + id + '">' + title + '</a></h2>' 
     								+ '<div class = "article-info">' + '作者:' + author + '</div>'
     								+ '<div class = "article-time">' + '时间:' + createTime + '</div>'
     								+ '<div class = "article-info">' + '阅读:' + clickCount + '</div>'
@@ -116,7 +145,7 @@
     					}
     					var art = resp['items'][0];
 						var id = art['id'];
-						console.log('artId:' + id);
+						//console.log('artId:' + id);
 						var title = art['title'];
 						var author = art['author'];
 						var content = art['content'];
@@ -219,11 +248,18 @@
     			});
 			});
 			
-			// 按分组展开文章
+			// 按时间分组展开文章
     		$('#group_id').on('click','.key-group', function(){
-    			var groupId = $(this).attr("group_id");
-    			var param = jQuery.param({id : groupId});
-				var url = 'article/articleByGroup';
+    			var time = $(this).attr("time_id");
+    			var param = jQuery.param({'time' : time});
+				var url = 'article/articleByTime';
+    			getArticles(param, url);
+    		});
+			// 按标签展开文章
+    		$('#tag_id').on('click','.key-tag', function(){
+    			var tagId = $(this).attr("id");
+    			var param = jQuery.param({id : tagId});
+				var url = 'article/articleByTag';
     			getArticles(param, url);
     		});
 			
@@ -236,7 +272,9 @@
       <div class="container">
         <nav class="blog-nav">
           <a id = 'home_id' class="blog-nav-item active" href="index">首页</a>
+          <!-- 
           <a id = 'new_id' class="blog-nav-item" href="new">新文章</a>
+           -->
           <a id = 'about_id' class="blog-nav-item" href="#">关于</a>
         </nav>
       </div>
@@ -246,7 +284,7 @@
 
       <div class="blog-header">
         <h4 class="blog-title">孙焕山の博客</h4>
-        <p class="lead blog-description">以简单之心对抗复杂的世界.</p>
+        <p class="lead blog-description">勤能补拙是良训，一份辛苦一份才.</p>
       </div>
 
       <div class="row">
@@ -271,7 +309,7 @@
           </div>
           <div class="sidebar-module">
           	<h4>标签</h4>
-          	<ul id = 'group_by_time' class="list-group" </ul>
+          	<div id = 'tag_id'></div>
           </div>
           <div class="sidebar-module">
             <h4>快速通道</h4>

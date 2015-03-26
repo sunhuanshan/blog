@@ -49,4 +49,3 @@ class Comment(db.Model):
     def __repr__(self):
         return '<Comment id = %s, article_id = %s, commenter = %s >' % (self.id, self.article_id, self.commenter)
 
-    
