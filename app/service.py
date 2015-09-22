@@ -32,9 +32,12 @@ class ArticleService():
         jarticles = []
         try:
             articles = self.articleDao.getArticlesByPage(start, limit)
-            for art in articles:
-                jart = JArticle(art, False)
-                jarticles.append(jart)
+            if articles:
+                for art in articles:
+                    jart = JArticle(art, False)
+                    jarticles.append(jart)
+            else:
+                raise Exception('no articles exist')
         except Exception, e:
             raise Exception(e)
         return jarticles
