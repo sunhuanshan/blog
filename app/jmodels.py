@@ -14,11 +14,11 @@ class JArticle():
             self.title = article.title.encode('utf-8')
             self.author = ''
             if article.author > 0:
-                self.author = authorDao.getAuthorNameById(article.author)
+                self.author = authorDao.getAuthorNameById(article.author).encode('utf-8')
             self.group = ''
             if self.group > 0:
                 self.group_url = '/tag?id=%s' % self.group
-                self.group = groupDao.getGroupNameById(self.group)
+                self.group = groupDao.getGroupNameById(self.group).encode('utf-8')
             self.content = ''
             self.leading = ''
             if isSingle:
@@ -41,7 +41,7 @@ class JGroup():
     def __init__(self, group):
         if isinstance(group, Group):
             self.id = group.id
-            self.name = group.name
+            self.name = group.name.encode('utf-8')
             self.count = group.count
             self.createTime = ''
             self.url='/tag?id=%s' % self.id
