@@ -45,6 +45,9 @@ def getArticlesData(page = 0):
 
 def myrender(file, data = None):
     html = ''
+    path = os.path.split(os.path.realpath(__file__))[0]
+    file = '%s/%s'%(path, file)
+    print file
     if os.path.isfile(file):
         tf = open(file, 'r')
         tpl = tf.readall()
