@@ -50,7 +50,7 @@ def myrender(file, data = None):
     print file
     if os.path.isfile(file):
         tf = open(file, 'r')
-        tpl = tf.readall()
+        tpl = tf.read()
         if data:
             html = pystache.render(tpl, data)
         else:
