@@ -17,6 +17,7 @@ class JArticle():
                 self.author = authorDao.getAuthorNameById(article.author)
             self.group = ''
             if self.group > 0:
+                self.group_url = '/tag?id=%s' % self.group
                 self.group = groupDao.getGroupNameById(self.group)
             self.content = ''
             self.leading = ''
@@ -29,6 +30,7 @@ class JArticle():
                 self.createTime = util.timeFromStamp(article.create_time)
             self.clicks = article.clicks
             self.comments = article.comments
+            self.url='/at?id=%s' % self.id
         else:
             return None
     
@@ -42,6 +44,7 @@ class JGroup():
             self.name = group.name
             self.count = group.count
             self.createTime = ''
+            self.url='/tag?id=%s' % self.id
             if group.create_time > 0:
                 self.createTime = util.timeFromStamp(group.create_time)
         else:

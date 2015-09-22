@@ -1,0 +1,21 @@
+
+<div id="tag">
+    {{ #tags }}
+        <span><a href="{{ url }}">{{ name }}&nbsp;x{{ count }}</a></span>
+    {{ /tags }}
+</div>
+<div id="articles">
+    {{ #articles }}
+    <div class="article">
+        <p class="title"><a href="{{ url }}" >{{ title }}</a></p>
+        <p class="content">{{{ content }}}</p>
+        <p class="info">发表于{{ createTime }}|tags&nbsp;&nbsp;<em><a href="{{ group_url }}">{{ group }}</a></em>
+        </p>
+    </div>
+    {{ /articles }}
+</div>
+<div id="page">
+    {{ #pages }}
+        <span><a href="{{ url }}" class="end {{ #active }}active{{ /active }}">{{ title }}</a></span>
+    {{ /pages }}
+</div>

@@ -1,0 +1,19 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv = "description" content = "{{description}}"/>
+    <meta http-equiv = "keywords" content = "{{ keywords }}"/>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="static/blog.css"/>
+    <script src="static/jquery.min.js"></script>
+</head>
+<body>
+    <div id="nav">
+        <p class="title">{{ blog_title }}</p>
+        <p class="menu">
+            {{ #menus }}
+                <a href="{{ menu_url }}">{{ menu_title }}</a>
+            {{ /menus }}
+        </p>
+    </div>
+    <div id="content">

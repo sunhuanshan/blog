@@ -19,7 +19,25 @@ class ArticleService():
         except Exception, e:
             raise Exception(e)
         return jarticles
-            
+
+    def getArticlesCount(self):
+        count = 0
+        try:
+            count = self.articleDao.getArticlesCount()
+        except Exception, e:
+            raise Exception(e)
+        return count
+
+    def getArticlesByPage(self, start, limit):
+        jarticles = []
+        try:
+            articles = self.articleDao.getArticlesByPage(start, limit)
+            for art in articles:
+                jart = JArticle(art, False)
+                jarticles.append(jart)
+        except Exception, e:
+            raise Exception(e)
+        return jarticles
     
     def getArticleById(self, artId):
         articles = self.articleDao.getArticleById(artId)

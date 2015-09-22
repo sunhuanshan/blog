@@ -49,6 +49,21 @@ class ArticleDao():
         except Exception, e:
             logger.error(' get articles error %s', e)
 
+    def getArticlesCount(self):
+        try:
+            count = Article.query.order_by(Article.create_time.desc()).count()
+            return count
+        except Exception, e:
+            logger.error(' get articles count error %s', e)
+
+    def getArticlesByPage(self, start, limit):
+        try:
+            articles = Article.query.order_by(Article.create_time.desc()).get((start, limit))
+            return articles
+        except Exception, e:
+            logger.error(' get a page articles error %s', e)
+
+
     def addArticle(self, art):
         try:
             db.session.add(art);
