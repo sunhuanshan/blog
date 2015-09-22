@@ -13,7 +13,6 @@ from tempfile import mktemp
 from werkzeug import secure_filename
 from config import UPLOAD_FOLDER, ALLOWED_EXTENSIONS
 from fileinput import filename
-import pystache
 import template
 
 app.json_encoder = MyJSONEncoder
@@ -28,12 +27,12 @@ def index():
     html = ''
     #渲染template_header
     header_data = template.getTemplateHeaderData()
-    html = pystache.render('templates/template_header.html', header_data)
+    html = template.myrender('static/tpl/template_header.html', header_data)
     #渲染articles
     articles_data = template.getArticlesData()
-    html = '%s%s' % (html, pystache.render('template/articles.html', articles_data))
+    html = '%s%s' % (html, template.myrender('static/tpl/articles.html', articles_data))
     #渲染footer
-    html = '%s%s' % (html, pystache.render('template/template_footer.html'))
+    html = '%s%s' % (html, template.myrender('static/tpl_footer.html'))
     return html
 
 @app.route('/article/list', methods = ['GET', 'POST'])

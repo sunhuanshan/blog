@@ -3,6 +3,8 @@
 from service import ArticleService, GroupService
 from config import DESCRIPTION, KEY_WORDS, TITLE, BLOG_TITLE, MENUS
 from flask import jsonify
+import os
+import pystache
 
 def getTemplateHeaderData():
     index_data={}
@@ -41,5 +43,15 @@ def getArticlesData(page = 0):
     data['pages'] = pages
     return jsonify(data)
 
-
+def myrender(file, data = None):
+    html = ''
+    if os.path.isfile(file):
+        tf = open(file, 'r')
+        tpl = tf.readall()
+        if data:
+            html = pystache.render(tpl, data)
+        else:
+            html = tpl
+        tf.close()
+    return html
 
