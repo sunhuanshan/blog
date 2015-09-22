@@ -31,11 +31,13 @@ class ArticleService():
     def getArticlesByPage(self, start, limit):
         jarticles = []
         try:
-            articles = self.articleDao.getArticlesByPage(start, limit)
+            articles = self.articleDao.getArticles()
             if articles:
+                index = 0
                 for art in articles:
-                    jart = JArticle(art, False)
-                    jarticles.append(jart)
+                    if (index >= start) and (index < start+limit):
+                        jart = JArticle(art, False)
+                        jarticles.append(jart)
             else:
                 raise Exception('no articles exist')
         except Exception, e:
