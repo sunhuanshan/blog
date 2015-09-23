@@ -32,9 +32,9 @@ def getArticlesData(page = 0):
         page = {}
         page['url'] = '/page?id=%s' % (i+1)
         if i == 0:
-            page['title'] = '首页'
+            page['title'] = u'首页'
         elif i == pages_count:
-            page['title'] = '末页'
+            page['title'] = u'末页'
         else:
             page['title'] = i+1
         if i== page:
