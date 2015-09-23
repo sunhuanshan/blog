@@ -5,6 +5,7 @@ from app.models import Article, Author, Group, Comment
 from app import util
 from pip._vendor.requests.models import CONTENT_CHUNK_SIZE
 from test_article import CONTENT, TITLE
+import pystache
 
 class Test():
     def __init__(self):
@@ -81,7 +82,13 @@ class Test():
     def test_image_content(self):
         content = u'我们来了到了那里<image>abcedff.jpg</image>'
         print util.replaceImage(content)
-        
+
+    def pyrender(self):
+        tpl = "<div>{{ title }} </div> <div> <p> {{content}}</p></div> "
+        data = '{"title":"测试文章1","content":"测试一下吧"}'
+        html = pystache.render(tpl, data)
+        print html
+
 if __name__ == "__main__":
     test = Test()
     #test.test_add_author()
@@ -96,4 +103,5 @@ if __name__ == "__main__":
     
     #test.test_add_comment()
     #test.test_get_comment()
-    test.test_image_content()
+    #test.test_image_content()
+    test.pyrender()
