@@ -194,6 +194,7 @@ a:hover {
     padding-bottom: 40px;
 }
 #single_article .prettyprint {
+    word-wrap: break-word;
     margin: 20px;
     background-color: #DCDAE4;
     box-shadow: 0 0 10px #3C3939;
