@@ -379,3 +379,25 @@ a:hover {
     font-size: 10px;
     color: #999;
 }
+
+#back-top {
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+
+}
+#back-top .arrow {
+    display: block;
+    width: 50px;
+    height: 50px;
+    background-color: #f7f7f7;
+    border: 1px solid #00f;
+    text-decoration: none;
+}
+#back-top span{
+    display: block;
+    margin: 15px;
+    font-size: 16px;
+    line-height: 100%;
+    font-weight: bold;
+}

@@ -93,4 +93,12 @@ $(document).ready(function() {
         input_review.data('answer', reviewer)
         input_review.focus();
     });
+
+    $(document).scroll(function(){
+        if($(document).scrollTop() > 400) {
+            $('#back-top').removeClass('hide');
+        } else {
+            $('#back-top').addClass('hide');
+        }
+    })
 });
