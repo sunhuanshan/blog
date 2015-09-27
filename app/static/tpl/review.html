@@ -1,0 +1,35 @@
+<div id="review">
+    {{ #review_box }}
+    <div id="review_box" class="hide">
+        <p class="close"><a href="javascript:void(0)">x</a></p>
+        <p><span>{{ email_title }}</span><input type="text" class = "email" name="email"/></p>
+        <p><span>{{ name_title }}</span><input type="text" class="name" name="name"/></p>
+        <p class="customer"><input class="is_visitor" type="checkbox" name="no_name">{{ reviewer_title }}</p>
+        <p class="submit"><a class="submit-btn" href="javascript:void(0)">{{ confirm }}</a><a class="submit-btn cancel" href="javascript:void(0)">{{ cancel }}</a></p>
+    </div>
+    {{ /review_box }}
+    {{ #input_review }}
+    <div class="input-review">
+          <p class="title">{{ review_title }}</p>
+          <textarea id="input_area" cols="125" rows="5" >{{ review_box_title }}</textarea>
+          <p><a class="commit-btn" href="javascript:void(0)">{{ submit }}</a></p>
+    </div>
+    {{ /input_review }}
+    <div class="review-history">
+        {{ #review_history_data }}
+            <p class="count">{{ review_count_title }}{{ review_count }}{{ review_count_unit }}</p>
+                {{ #review_history }}
+                    <div class="single-review" review_id=" {{ id }}">
+                         <p><span class="reviewer">{{ commenter }}</span>
+                            {{ #answer }}
+                                {{ replay }}&nbsp;<span class="answer">{{ answer }}</span>
+                            {{ /answer }}
+                         </p>
+                         <p class="content">{{ comment }}</p>
+                         <p class="info">{{ published }}{{ create_time }}</p>
+                         <p class="review-action"><a class="replay" href="javascript:void(0)">{{ replay }}</a><a class="favorite" href="{{ favorite_url }}">{{ favorite }}</a>{{ #has_favorite }}(<span class="favorite-count">{{ favorite_count }}</span>{{ favorite_title }}){{ /has_favorite }}</p>
+                    </div>
+                {{ /review_history }}
+        {{ /review_history_data }}
+    </div>
+</div>

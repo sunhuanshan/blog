@@ -35,9 +35,10 @@ class ArticleService():
             if articles:
                 index = 0
                 for art in articles:
+                    index += 1
                     if (index >= start) and (index < start+limit):
                         jart = JArticle(art, False)
-                        jarticles.append(jart)
+                        jarticles.append(jart._to_json())
             else:
                 raise Exception('no articles exist')
         except Exception, e:
@@ -45,19 +46,17 @@ class ArticleService():
         return jarticles
     
     def getArticleById(self, artId):
-        articles = self.articleDao.getArticleById(artId)
-        jarticles = []
-        for art in articles:
+        art = self.articleDao.getArticleById(artId)
+        if art:
             jart = JArticle(art, True)
-            jarticles.append(jart)
-        return jarticles
+        return jart._to_json()
     
     def getArticlesByGroupId(self, groupId):
         articles = self.articleDao.articlesByGroupId(groupId)
         jarticles = []
         for art in articles:
             jart = JArticle(art, False)
-            jarticles.append(jart)
+            jarticles.append(jart._to_json_simple())
         return jarticles
 
     def addClickCount(self, artId):
@@ -138,7 +137,7 @@ class GroupService():
         jgroups = []
         for gp in groups:
             jgp = JGroup(gp)
-            jgroups.append(jgp)
+            jgroups.append(jgp._to_json())
         return jgroups
 
 class CommentService():
@@ -150,14 +149,16 @@ class CommentService():
         jcoms = []
         for com in coms:
             jcom = JComment(com)
-            jcoms.append(jcom)
+            jcoms.append(jcom._to_json())
         return jcoms
     
-    def addComments(self, artId, commenter, comment):
+    def addComments(self, artId, commenter, comment, answer = ''):
         com = Comment()
         com.article_id = artId
         com.commenter = commenter
+        if answer != '':
+            com.answer = answer
         com.comment = comment
         com.create_time = util.getTimestamp()
         self.commentDao.addComment(com)
-    
+

@@ -13,7 +13,7 @@ from tempfile import mktemp
 from werkzeug import secure_filename
 from config import UPLOAD_FOLDER, ALLOWED_EXTENSIONS
 from fileinput import filename
-import template
+import render
 
 app.json_encoder = MyJSONEncoder
 
@@ -26,15 +26,91 @@ comService = CommentService()
 def index():
     html = ''
     #渲染template_header
-    header_data = template.getTemplateHeaderData()
-    html = template.myrender('static/tpl/template_header.html', header_data)
+    header_data = render.getTemplateHeaderData()
+    html = render.myRender('static/tpl/template_header.html', header_data)
     #渲染articles
-    articles_data = template.getArticlesData()
-    html = '%s%s' % (html, template.myrender('static/tpl/articles.html', articles_data))
+    articles_data = render.getContentData()
+    html = '%s%s' % (html, render.myRender('static/tpl/articles.html', articles_data))
     #渲染footer
-    html = '%s%s' % (html, template.myrender('static/tpl_footer.html'))
+    footer_data = render.getTemplateFooterData()
+    html = '%s%s' % (html, render.myRender('static/tpl/template_footer.html', footer_data))
     return html
 
+@app.route('/page', methods = ['GET'])
+def page():
+    resp = {}
+    try:
+        page_id = int(request.args['id'])
+        #渲染articles
+        html =''
+        articles_data = render.getArticlesData(page_id)
+        html = '%s%s' % (html, render.myRender('static/tpl/articles.html', articles_data))
+        resp['success'] = True
+        resp['html'] = html
+    except Exception, e:
+        logger.error(' get articles has an error %s' % e)
+        resp['success'] = False
+        resp['detail'] = '获取文章失败'
+    return jsonify(resp)
+
+@app.route('/at', methods = ['GET'])
+def article():
+    resp = {}
+    at_id = int(request.args['id'])
+    html = ''
+    #渲染template_header
+    header_data = render.getTemplateHeaderData()
+    html = render.myRender('static/tpl/template_header.html', header_data)
+    #渲染article
+    article_data = render.getArticleData(at_id)
+    html = '%s%s' % (html, render.myRender('static/tpl/article.html', article_data))
+    #渲染review
+    review_data = render.getReview(at_id)
+    html = '%s%s' % (html, render.myRender('static/tpl/review.html', review_data))
+    #渲染footer
+    footer_data = render.getTemplateFooterData()
+    html = '%s%s' % (html, render.myRender('static/tpl/template_footer.html', footer_data))
+    return html
+
+@app.route('/addReview', methods=['GET'])
+def addReview():
+    resp = {}
+    try:
+        id = request.args['id']
+        comment = request.args['comment']
+        answer = request.args['answer']
+        if 'is_visitor' in request.args and request.args['is_visitor']:
+            commenter = u'游客'
+        else:
+            commenter = request.args['name']
+        comService = CommentService()
+        comService.addComments(id, commenter, comment, answer)
+        #重新渲染review
+        history_review = render.getHistoryReview(id)
+        html = render.myRender('static/tpl/review.html', history_review)
+        resp['success'] = True
+        resp['html'] = html
+    except Exception, e:
+        logger.error(' add review has an error %s' % e)
+        resp['success'] = False
+        resp['detail'] = '添加评论失败'
+    return jsonify(resp)
+
+@app.route('/tags', methods = ['GET'])
+def tags():
+    html = ''
+    #渲染template_header
+    header_data = render.getTemplateHeaderData()
+    html = render.myRender('static/tpl/template_header.html', header_data)
+    #渲染tags
+    tags_data = render.getTags()
+    html = '%s%s' % (html, render.myRender('static/tpl/tag.html', tags_data))
+    #渲染footer
+    footer_data = render.getTemplateFooterData()
+    html = '%s%s' % (html, render.myRender('static/tpl/template_footer.html', footer_data))
+    return html
+
+#############################################################
 @app.route('/article/list', methods = ['GET', 'POST'])
 def articleList():
     resp = {}
@@ -118,7 +194,8 @@ def getComment():
         resp['success'] = False
         resp['detail'] = '获取评论失败'
     return jsonify(resp)
-        
+
+
 @app.route('/article/addComment', methods = ['GET', 'POST'])
 def addComment():
     resp = {}

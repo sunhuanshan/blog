@@ -1,21 +1,25 @@
-
-<div id="tag">
-    {{ #tags }}
-        <span><a href="{{ url }}">{{ name }}&nbsp;x{{ count }}</a></span>
-    {{ /tags }}
-</div>
-<div id="articles">
-    {{ #articles }}
-    <div class="article">
-        <p class="title"><a href="{{ url }}" >{{ title }}</a></p>
-        <p class="content">{{{ content }}}</p>
-        <p class="info">发表于{{ createTime }}|tags&nbsp;&nbsp;<em><a href="{{ group_url }}">{{ group }}</a></em>
-        </p>
+{{ #tags_data }}
+    <div id="tag">
+        {{ #tags }}
+            <span><a href="{{ url }}">{{ name }}<em>&nbsp;|&nbsp;x{{ count }}</em></a></span>
+        {{ /tags }}
     </div>
-    {{ /articles }}
-</div>
-<div id="page">
-    {{ #pages }}
-        <span><a href="{{ url }}" class="end {{ #active }}active{{ /active }}">{{ title }}</a></span>
-    {{ /pages }}
-</div>
+{{ /tags_data }}
+{{ #articles_data }}
+    <div id="articles">
+        {{ #articles }}
+        <div class="article" article_id="{{ id }}">
+            <p class="title"><a href="{{ url }}" >{{ title }}</a></p>
+            <p class="content">{{{ leading }}}</p>
+            <p class="info">{{ published }}{{ create_time }}&nbsp;|&nbsp;tags&nbsp;&nbsp;<em><a href="{{ group_url }}">{{ group }}</a></em>&nbsp;|&nbsp;{{ view_title }}&nbsp;({{ comments}})</p>
+        </div>
+        {{ /articles }}
+    </div>
+{{ /articles_data }}
+{{ #pages_data }}
+    <div id="page">
+        {{ #pages }}
+            <span class="page"><a href="javascript:void(0)" page_id = "{{ id }}" class="end {{ #active }}active{{ /active }}">{{ title }}</a></span>
+        {{ /pages }}
+    </div>
+{{ /pages_data }}

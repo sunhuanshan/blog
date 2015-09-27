@@ -13,7 +13,7 @@ class Author(db.Model):
     #articles = db.relationship('Article', backref = 'author', lazy = 'dynamic')
 
     def __repr__(self):
-        return '<User id= %s, name= %s>' % (self.id, self.name.encode('utf-8'))
+        return '<User id= %s, name= %s>' % (self.id, self.name)
     
 
 class Article(db.Model):
@@ -37,7 +37,10 @@ class Group(db.Model):
     create_time = db.Column(db.Integer, default = 0)
     
     def __repr__(self):
-        return '<Group id = %s, name = %s>' % (self.id, self.name.encode('utf-8'))
+        if isinstance(self.name, unicode):
+            return '<Group id = %s, name = %s>' % (self.id, self.name.encode('utf-8'))
+        else:
+            return '<Group id = %s, name = %s>' % (self.id, self.name)
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -45,6 +48,8 @@ class Comment(db.Model):
     comment = db.Column(db.Text)
     commenter = db.Column(db.String(100))
     create_time = db.Column(db.Integer, default = 0)
+    answer = db.Column(db.Text)
+    favorite = db.Column(db.Integer, default = 0)
     
     def __repr__(self):
         return '<Comment id = %s, article_id = %s, commenter = %s >' % (self.id, self.article_id, self.commenter)

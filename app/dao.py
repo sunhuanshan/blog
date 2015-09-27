@@ -66,9 +66,9 @@ class ArticleDao():
 
     def addArticle(self, art):
         try:
-            db.session.add(art);
-            db.session.flush();
-            db.session.commit();
+            db.session.add(art)
+            db.session.flush()
+            db.session.commit()
         except Exception, e:
             logger.error(' add article error %s', e)
     
@@ -112,8 +112,8 @@ class ArticleDao():
     
     def getArticleById(self, id):
         try:
-            articles = Article.query.filter_by(id = id).all()
-            return articles
+            article = Article.query.filter_by(id = id).first()
+            return article
         except Exception, e:
             logger.error(' get article by id error %s', e)
 
@@ -250,4 +250,4 @@ class CommentDao():
         except Exception, e:
             logger.error('add comment error %s ' % e)
             
-    
+

@@ -16,9 +16,9 @@ class JArticle():
             if article.author > 0:
                 self.author = authorDao.getAuthorNameById(article.author).encode('utf-8')
             self.group = ''
-            if self.group > 0:
-                self.group_url = '/tag?id=%s' % self.group
-                self.group = groupDao.getGroupNameById(self.group).encode('utf-8')
+            if article.group > 0:
+                self.group_url = '/tag?id=%s' % article.group
+                self.group = groupDao.getGroupNameById(article.group).encode('utf-8')
             self.content = ''
             self.leading = ''
             if isSingle:
@@ -37,6 +37,19 @@ class JArticle():
     def __repr__(self):
         return '''<JArticle title = %s >''' % self.title
 
+    def _to_json(self):
+        return {
+                "id":self.id, "title":self.title, "author":self.author,
+                "group":self.group, "group_url":self.group_url, "content": self.content,
+                "leading":self.leading, "create_time":self.createTime, "clicks":self.clicks,
+                "comments":self.comments, "url":self.url
+        }
+
+    def _to_json_simple(self):
+        return {
+                "id": self.id, "title": self.title, "url": self.url,
+                "create_time": self.createTime, "view_count": self.clicks}
+
 class JGroup():
     def __init__(self, group):
         if isinstance(group, Group):
@@ -44,14 +57,17 @@ class JGroup():
             self.name = group.name.encode('utf-8')
             self.count = group.count
             self.createTime = ''
-            self.url='/tag?id=%s' % self.id
+            self.url='/tags#tag_%s' % self.id
             if group.create_time > 0:
                 self.createTime = util.timeFromStamp(group.create_time)
         else:
             return None
         
     def __repr__(self):
-        return '''<JGroup name = %s >''' % self.name     
+        return '''<JGroup name = %s >''' % self.name
+    def _to_json(self):
+        return { "id" : self.id, "name": self.name , "count": self.count,
+                 "createTime": self.createTime, "url": self.url}
 
 class JComment():
     def __init__(self, comment):
@@ -63,11 +79,21 @@ class JComment():
             self.createTime = ''
             if comment.create_time > 0:
                 self.createTime = util.timeFromStamp(comment.create_time)
+            self.answer = comment.answer
+            if comment.favorite > 0:
+                self.favorite = comment.favorite
+            else:
+                self.favorite = False
         else:
             return None
     
     def __repr__(self):
         return '''<JComment id = %s>''' % self.id
+
+    def _to_json(self):
+        return { "id": self.id, "article_id": self.articleId, "commenter": self.commenter,
+                "comment": self.comment, "create_time": self.createTime,
+                "answer": self.answer ,"favorite_count": self.favorite}
 
 class MyJSONEncoder(JSONEncoder):
     def default(self, obj):

@@ -1,0 +1,14 @@
+<div id="tag_content">
+    {{ #tags }}
+    <div class="single-tag" id="tag_{{ id }}">
+        {{ #tag }}
+            <p class="title">{{ name }}</p>
+        {{ /tag }}
+        {{ #articles }}
+            <div class="articles">
+                 <p class="article" ><a href="{{ url }}">{{ title }}&nbsp;&nbsp;<span class="info">{{ create_time }}&nbsp {{ view_count_title }}({{ view_count }})</span></a></p>
+            </div>
+        {{ /articles }}
+    </div>
+    {{ /tags }}
+</div>

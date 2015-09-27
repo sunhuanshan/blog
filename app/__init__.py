@@ -3,6 +3,10 @@ import os
 from flask import Flask 
 from config import basedir
 from flask.ext.sqlalchemy import SQLAlchemy
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 app = Flask(__name__)
 
 app.config.from_object('config')

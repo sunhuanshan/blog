@@ -1,37 +1,8 @@
-<div id="single_article">
-    <p class="title">{{ article_title }}</p>
-    <p class="info">作者 {{ article_author }} | 发布于{{ article_date }} &nbsp;
-        {{ #article_tags }}
-            <a href="{{article_tag_url}}" class="tags">{{ article_tag_title }}</a>&nbsp;</a></p>
-        {{ /article_tags }}
-    <div class="content">{{{ article_content }}}</div>
-</div>
-<div id="review">
-    <div id="review-box" class="hide">
-        <p class="close"><a href="">X</a></p>
-        <p><span>邮箱：</span><input type="text" name="email"/></p>
-        <p><span>昵称：</span><input type="text" name="name"/></p>
-        <p class="customer"><input type="checkbox" name="no_name" />以游客身份留言</p>
-        <p class="submit"><a class="submit-btn" href="">确定</a><a class="submit-btn cancel" href="">取消</a></p>
+{{ #article }}
+    <div id="single_article" article_id="{{ id }}">
+        <p class="title">{{ title }}</p>
+        <p class="info">{{ author_title }}&nbsp;{{ author }}&nbsp;|&nbsp;{{ published }}&nbsp;{{ create_time }} &nbsp;<a href="{{group_url}}" class="tags">{{ group }}</a>&nbsp;</p>
+        <div class="content">{{{ content }}}</div>
     </div>
-    <div class="input-review">
-          <p class="title">评论一下</p>
-          <textarea cols="125" rows="5" >说点什么吧...</textarea>
-          <p><a class="commit-btn" href="">提交</a></p>
-    </div>
-    <p class="count">评论总数共有{{ review_count }}条</p>
-    <div class="review-history">
-        {{ #review_history }}
-            <div class="single-review">
-                 <p><span class="reviewer">{{ reviewer }}</span>
-                     {{ #has_answer }}
-                         回复<span class="reviewer">{{ answer }}</span>
-                    {{ /has_answer }}
-                 </p>
-                 <p class="content">{{ review_content }}</p>
-                 <p class="info">发表于{{ review_time }}</p>
-                 <p class="review-action"><a href="">回复</a><a href="{{ favorite_url }}">顶一下</a>（<span class="favorite-count">{{ faverate_count }}</span>个人觉得很赞）</p>
-            </div>
-        {{ /review_history }}
-    </div>
-</div>
+{{ /article }}
+
