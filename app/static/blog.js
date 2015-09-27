@@ -100,5 +100,5 @@ $(document).ready(function() {
         } else {
             $('#back-top').addClass('hide');
         }
-    })
+    });
 });

@@ -76,6 +76,7 @@ def getArticlesData(page=1):
     arts = atService.getArticlesByPage((page-1)*10, 10)
     if len(arts) > 0:
         data['articles_data']=True
+        data['reload'] = True
         data['articles'] = arts
         data['published'] = PUBLISHED
         data['view_title'] = VIEW_TITLE

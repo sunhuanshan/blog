@@ -5,8 +5,10 @@
         {{ /tags }}
     </div>
 {{ /tags_data }}
-{{ #articles_data }}
+{{ ^reload }}
     <div id="articles">
+{{ /reload }}
+{{ #articles_data }}
         {{ #articles }}
         <div class="article" article_id="{{ id }}">
             <p class="title"><a href="{{ url }}" >{{ title }}</a></p>
@@ -14,8 +16,10 @@
             <p class="info">{{ published }}{{ create_time }}&nbsp;|&nbsp;tags&nbsp;&nbsp;<em><a href="{{ group_url }}">{{ group }}</a></em>&nbsp;|&nbsp;{{ view_title }}&nbsp;({{ comments}})</p>
         </div>
         {{ /articles }}
-    </div>
 {{ /articles_data }}
+{{ ^reload }}
+    </div>
+{{ /reload }}
 {{ #pages_data }}
     <div id="page">
         {{ #pages }}

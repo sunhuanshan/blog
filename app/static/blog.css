@@ -3,6 +3,9 @@ body{
     margin: 0;
     font-family: verdana,arial,helvetica,sans-serif;
     overflow-x:hidden;
+    background-image: url(imag/bg.gif);
+    background-repeat: repeat;
+    background-color: #FFFDFA;
 }
 *{
     margin: 0;
@@ -52,10 +55,12 @@ a:hover {
 }
 #tag {
     padding: 10px;
-    margin: 0 auto;
+    margin: 20px auto;
     width: 1004px;
-    margin-top : 20px;
-    border: 1px dashed #D8D8D8;
+    display: block;
+    box-shadow: 0 0 10px #777;
+    border-radius: 5px;
+    background-color: #fff;
 }
 #tag span {
     display:inline-block;
@@ -83,9 +88,12 @@ a:hover {
     background-color: #ccc;
 }
 #articles {
-    width: 1024px;
+    width: 984px;
     margin: 0 auto;
-    padding: 0;
+    padding: 20px;
+    box-shadow: 0 0 10px #777;
+    border-radius: 5px;
+    background-color: #fff;
 }
 #articles .article {
     margin-top: 15px;
@@ -137,6 +145,7 @@ a:hover {
     text-decoration: none;
     display: inline-block;
     background-color: #5690D2;
+    box-shadow: 0 0 10px #777;
 }
 #page .page{
     padding: 0 3px;
@@ -383,7 +392,7 @@ a:hover {
 #back-top {
     position: fixed;
     right: 50px;
-    bottom: 50px;
+    bottom: 80px;
 
 }
 #back-top .arrow {
@@ -392,12 +401,13 @@ a:hover {
     height: 50px;
     background-color: #f7f7f7;
     border: 1px solid #00f;
+    font-size: 16px;
+    line-height: 300%;
+    font-weight: bold;
     text-decoration: none;
 }
-#back-top span{
-    display: block;
-    margin: 15px;
-    font-size: 16px;
-    line-height: 100%;
-    font-weight: bold;
+
+#back-top span {
+    margin-left: 12px;
+
 }
