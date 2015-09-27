@@ -4,6 +4,7 @@ import time
 from datetime import datetime
 import calendar
 from config import LEADING_LENGTH
+import re
 
 def getTimestamp():
     dt = datetime.utcnow()
@@ -52,5 +53,5 @@ def creatLeading(content):
 
 def replaceImage(content):
     recontent = content.replace('&lt;image&gt;', '<div align="center"><br><img class = "blog-img" src="static/imag/')
-    content = recontent.replace('&lt;/image&gt;', '"</img></div><br>') 
+    content = recontent.replace('&lt;/image&gt;', '"</img></div><br>')
     return content

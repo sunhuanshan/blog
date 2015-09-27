@@ -193,6 +193,14 @@ a:hover {
     margin-bottom: 30px;
     padding-bottom: 40px;
 }
+#single_article .prettyprint {
+    background-color: #DCDAE4;
+    box-shadow: 0 0 10px #3C3939;
+    font-family: Calibri;
+    font-size: 14px;
+    padding-left: 5px;
+    color: #222;
+}
 #single_article .tags {
     background-color: #C5C5C5;
     border-radius: 2px;
@@ -409,5 +417,4 @@ a:hover {
 
 #back-top span {
     margin-left: 12px;
-
 }
