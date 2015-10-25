@@ -17,7 +17,7 @@ class JArticle():
                 self.author = authorDao.getAuthorNameById(article.author).encode('utf-8')
             self.group = ''
             if article.group > 0:
-                self.group_url = '/tag?id=%s' % article.group
+                self.group_url = '/tag#tag_%s' % article.group
                 self.group = groupDao.getGroupNameById(article.group).encode('utf-8')
             self.content = ''
             self.leading = ''
