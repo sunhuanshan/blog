@@ -129,11 +129,12 @@ def articleList():
    
     return jsonify(resp)
 
+@app.route('/editArticle', methods = ['GET'])
 @app.route('/article/content', methods = ['GET', 'POST'])
 def articleDetail():
     resp = {}
     try:
-        artId = request.form['id']
+        artId = request.args['id']
         if artId:
             artService.addClickCount(artId)
             arts = artService.getArticleById(artId)
@@ -272,7 +273,8 @@ def addArticle():
         group = request.form['group']
         content = request.form['content']
         key = request.form['key']
-        recontent = util.replaceImage(content)        
+        #recontent = util.replaceImage(content)
+        recontent = content;        
         if  not key.encode('utf8') == 'sun123':
             resp['success'] = False
             resp['detail'] = '提交码错误，无法提交'
@@ -281,6 +283,31 @@ def addArticle():
                 artService.addArticle(title, group, recontent)
                 resp['success'] = True
                 resp['detail'] = '发表文章成功'
+            else:
+                raise Exception('parameter error')
+    except Exception, e:
+        resp['success'] = False
+        resp['detail'] = '%s' % e
+    return jsonify(resp)
+
+@app.route('/article/edit', methods = ['GET', 'POST'])
+def editArticle():
+    resp = {}
+    try:
+        id = request.form['id']
+        title = request.form['title']
+        group = request.form['group']
+        content = request.form['content']
+        key = request.form['key']
+        recontent = content;        
+        if  not key.encode('utf8') == 'sun123':
+            resp['success'] = False
+            resp['detail'] = '提交码错误，无法提交'
+        else:
+            if title and group and recontent:
+                artService.editArticle(id, title, group, recontent)
+                resp['success'] = True
+                resp['detail'] = '修改文章成功'
             else:
                 raise Exception('parameter error')
     except Exception, e:

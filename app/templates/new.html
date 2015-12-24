@@ -10,9 +10,6 @@
 
     <title>孙焕山</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="static/bootstrap.min.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="static/blog.css" rel="stylesheet">
 
@@ -20,27 +17,44 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="static/jquery.min.js"></script>
-    <script src="static/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="static/themes/default/default.css" />
-	<script charset="utf-8" src="static/kindeditor-min.js"></script>
-	<script charset="utf-8" src="static/lang/zh_CN.js"></script>
 	<script charset="utf-8" src="static/jquery.form.js"></script>
-    
     <script type="text/javascript">
-	
-	$(document).ready(function(){
-		var editor = KindEditor.create(
-				'textarea[name="content"]',
-				{
-					resizeType : 1,
-					allowPreviewEmoticons : false,
-					allowImageUpload : false,
-					items : [
-						'fontname', 'fontsize', 'code', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
-						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
-						'insertunorderedlist', '|', 'emoticons', 'link']}
-		);
-		
+    var submit_url = 'article/addarticle';
+    var submit_param = {};
+	$(document).ready(function(){	 	
+	 	$(document).ready(function(){
+	 		if(document.location.search) {
+				var search = document.location.search;
+				var ids = search.match(/\d+/g);
+				if(ids.length > 0 && ids[0] > 0) {
+					$.ajax({
+						async:true,
+						url:'/editArticle',
+						data: {id : ids[0]},
+						method: 'GET',
+						dataType: 'json',
+						success: function(resp){
+							if(!resp['success']){
+								alert(resp['detail']);
+								return false;
+							}
+							art_data = resp.items;
+							$('#title_id').val(art_data.title);
+							$('#group_id').val(art_data.group);
+							$('#content_id').val(art_data.content);
+							submit_param['id']=art_data.id;
+							submit_url = '/article/edit';
+						},
+						error:function(xhr,error){
+							console.log(xhr);
+							console.log(error);
+						}
+					});
+				} 
+			}
+	 	});
+
+
 		$('#submit_image_id').click(function(){
 			$('#upload_modal').modal('show');			
 		});
@@ -60,7 +74,7 @@
 		$('#submit_id').click(function(){
 			var title = $('#title_id').val();
 			var group = $('#group_id').val();
-			var content = editor.html();
+			var content = $('#content_id').val();
       		var key = $('#key_id').val();
 			if(title == ''){
 				alert('请输入标题');
@@ -70,19 +84,22 @@
 				alert('请添加标签');
 				return false;
 			}
-      if(key == ''){
-        alert('请输入提交码');
-        return false;
-      }
+      		if(key == ''){
+        		alert('请输入提交码');
+        		return false;
+      		}
 			if(content == ''){
 				alert('请添加正文');
 				return false;
 			}
-			var param = jQuery.param({title: title, group: group, content: content, key: key});
+			submit_param['title'] = title;
+			submit_param['group'] = group;
+			submit_param['content'] = content;
+			submit_param['key'] = key;
 			$.ajax({
-				async:true,
-				url:'article/addarticle',
-				data: param,
+				async: true,
+				url: submit_url,
+				data: submit_param,
 				method: 'POST',
 				dataType: 'json',
 				success: function(resp){
@@ -101,54 +118,72 @@
 		});
 	});
     </script>
+    <style type="text/css">
+    #input form{
+    	margin: 15px;
+    }
+    #input .item{
+    	display: block;
+    	margin: 15px;
+    }
+    #input .item span {
+    	display: inline-block;
+    	font-size: 14px;
+    	font-weight: bold;
+    	margin-left: 15px;
+    	width: 100px;
+    	text-align: left;
+    }
+    #input .item .block{
+    	display: block;
+    }
+    #input .item input[type="text"]{
+    	height: 20px;
+    	padding: 5px 3px;
+    	width: 300px; 
+    }
+    #input .item textarea{
+    	margin: 15px;
+    	width: 970px;
+    	height: 1000px;
+    	padding: 15px;
+    	font-family: verdana,arial,helvetica,sans-serif;
+    }
+    #input button{
+    	margin-left: 50px;
+    }
+    </style>
   </head>
   <body>
-      <div class="blog-masthead">
-      <div class="container">
-        <nav class="blog-nav">
-          <a id = 'home_id' class="blog-nav-item " href="index">首页</a>
-          <a id = 'new_id' class="blog-nav-item active" href="article/new">新文章</a>
-          <a id = 'about_id' class="blog-nav-item" href="#">关于</a>
-        </nav>
-      </div>
-    </div>
-    <div class="container">
-  		<form role="form">
-  			<div class="form-group">
-    			<label for="title">标题</label>
-    			<input type="text" class="form-control" id="title_id" placeholder="标题/title">
- 			</div>
-  		<div class="form-group">
-    			<label for="group">标签</label>
-    			<input type="text" class="form-control" id="group_id" placeholder="标签/group">
- 			</div>
-      <div class="form-group">
-          <label for="group">文章提交码</label>
-          <input type="text" class="form-control" id="key_id" placeholder="提交码/submit code">
-      </div>
- 			<div class="form-group">
-    			<label for="content">正文</label>
-  				<textarea name="content" class="form-control" rows="20" id = "content_id"></textarea>
-  			</div>
+    <div class="container" id = "input">
+    	<form role="form">
+  			<ul>
+  			<li class="item">
+    			<span <label for="title">标题</label></span>
+    			<input type="text" class="form-control" id="title_id" placeholder="标题/title">{{title}}
+    		</li>
+    		<li class="item">	
+    			<span <label for="group">标签</label></span>
+    			<input type="text" class="form-control" id="group_id" placeholder="标签/group">{{group}}
+         	</li>
+         	<li class="item">
+         		<span <label for="group">文章提交码</label></span>
+          		<input type="text" class="form-control" id="key_id" placeholder="提交码/submit code">
+          	</li>
+          	<li class="item">
+    			<span class="block" <label for="content">正文</label></span>
+  				<textarea class="form-control" rows="20" id = "content_id">{{content}}</textarea>
+  			</li>
+  			<ul>
   			<button id="submit_id" type="button" class="btn btn-default">提交</button>
-  			<button id="submit_image_id" type="button" class="btn btn-default">上传相关图片</button>
-	 </form>
-	 <!-- 上传文件模态框  -->
-	 <div class="modal" id="upload_modal">
-	 <div class="modal-dialog">
-	 	<div class="modal-content">
-		<div class="modal-body">	
-			<form id="upload_form_id" class="form-horizontal" action ="/upload" enctype = "multipart/form-data" method = "post">
-				<label for="exampleInputFile">上传图片</label>
-				<div class="form-group upload" >
-					<input type = "file" name = 'file' id = "image_id">
-				</div>
-				<button type="submit" class="btn btn-default">提交</button>
-			</form>
-		</div>
-		</div>
-	</div>
-	</div>
+	 	</form>
 	</div> 
+	<form id="upload_form_id" class="form-horizontal" action ="/upload" enctype = "multipart/form-data" method = "post">
+			<p class = "item">
+				<span <label for="exampleInputFile">上传图片</label></span>
+				<input type = "file" name = 'file' id = "image_id">
+				<button type="submit" class="btn btn-default">提交</button>
+			</p>
+		</form>'
   </body>
  </html>

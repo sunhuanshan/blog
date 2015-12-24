@@ -91,6 +91,31 @@ class ArticleService():
         except Exception, e:
             raise Exception(e)
     
+    def editArticle(self, id, title, groupName, content):
+        try:
+            article = self.articleDao.getArticleById(id)
+            if not article:
+                raise Exception('文章不存在，无法修改')
+            else:
+                article.title = title
+                article.content = content
+                group = self.groupDao.getGroupByName(groupName)
+                if group:
+                    article.group = group.id
+                    self.groupDao.addGroupCount(group.id)
+                else:
+                    group = Group()
+                    group.name = groupName 
+                    group.count = 1
+                    group.create_time = util.getTimestamp()
+                    self.groupDao.addGroup(group)
+                    article.group = group.id 
+                article.author = 1
+                article.create_time = util.getTimestamp()
+                self.articleDao.addArticle(article)
+        except Exception, e:
+            raise Exception(e)
+
     #按月份对时间进行分组
     def getTimeGroups(self):
         timeGroups = {}
