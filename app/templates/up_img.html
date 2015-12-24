@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>孙焕山</title>
+    <style type="text/css">
+    	#upload span {
+	    	display: block;
+	    	font-size: 12px;
+	    	font-weight: bold;
+	    	margin: 10px;
+	    	width: 100px;
+	    	text-align: left;
+	    }
+	    #upload .up-file {
+	    	display: block;
+	    	font-size: 12px;
+	    	margin: 10px;
+	    	text-align: left;
+	    }
+	    #upload .hidden {
+	    	display: none;
+	    }
+	    #upload .btn {
+	    	font-size: 12px;
+	    	font-weight: bold;
+	    	margin: 10px;
+	    	text-align: center;
+	    }
+    </style>
+	<script charset="utf-8" src="static/jquery.min.js"></script>
+	<script charset="utf-8" src="static/jquery.form.js"></script>
+    <script type="text/javascript">
+    	window.onload = function(){
+    		var index = 2;
+	    	$('#new_add_btn').click(function(event){
+				event.preventDefault();
+	    		$('#select_file_id').append('<input class ="up-file" type = "file" name = "file' + index + '" id = "image_id' + index + '">');
+	    		index ++;
+	    	});
+    	};
+    	$('#submit_image_id').click(function(){
+			$('#upload_form_id').ajaxForm({
+				beforeSubmit:function(){
+				},
+				success: function(resp){
+					alert(resp['detail']);
+				}
+			});		
+		});
+    </script>
+   <head>
+   <body>
+	<div id="upload">
+		<form id="upload_form_id" class="form-horizontal" action ="/upload" enctype = "multipart/form-data" method = "post">
+			<span <label id = "up_file_id" for="exampleInputFile">上传图片</label></span>
+			<div id="select_file_id">
+				<input class ="up-file" type = "file" name = 'file1' id = "image_id1">
+			</div>
+			<button class="btn btn-default" id="new_add_btn">添加</button>
+			<button type="submit" class="btn btn-default">提交</button>
+		</form>
+	</div>
+   </body>
+</html>    	

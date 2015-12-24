@@ -11,7 +11,7 @@ from werkzeug import responder
 from app.service import CommentService
 from tempfile import mktemp
 from werkzeug import secure_filename
-from config import UPLOAD_FOLDER, ALLOWED_EXTENSIONS
+from config import UPLOAD_FOLDER, ALLOWED_EXTENSIONS, SUBMIT_KEY
 from fileinput import filename
 import render
 
@@ -265,6 +265,11 @@ def articleByTime():
 def newArticle():
     return render_template('new.html')
 
+@app.route('/uploadImg', methods = ['GET', 'POST'])
+def upload():
+    return render_template('up_img.html')
+
+
 @app.route('/article/addarticle', methods = ['GET', 'POST'])
 def addArticle():
     resp = {}
@@ -275,7 +280,7 @@ def addArticle():
         key = request.form['key']
         #recontent = util.replaceImage(content)
         recontent = content;        
-        if  not key.encode('utf8') == 'sun123':
+        if  not key.encode('utf8') == SUBMIT_KEY:
             resp['success'] = False
             resp['detail'] = '提交码错误，无法提交'
         else:
@@ -300,7 +305,7 @@ def editArticle():
         content = request.form['content']
         key = request.form['key']
         recontent = content;        
-        if  not key.encode('utf8') == 'sun123':
+        if  not key.encode('utf8') == SUBMIT_KEY:
             resp['success'] = False
             resp['detail'] = '提交码错误，无法提交'
         else:
@@ -323,11 +328,31 @@ def loadImage():
     resp = {}
     try:
         if request.method == 'POST':
-            file = request.files['file']
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                filePath = os.path.join(UPLOAD_FOLDER, filename)
-                file.save(filePath)
+            index = 1;
+            fileName = 'file%d' % index
+            has_file = True
+            try:
+                file = request.files[fileName]
+                if file.filename == '':
+                    logger.error('file empty')
+                    raise Exception('选择文件！')
+            except Exception, e:
+                has_file = False
+            while has_file:    
+                if allowed_file(file.filename):
+                    filename = secure_filename(file.filename)
+                    filePath = os.path.join(UPLOAD_FOLDER, filename)
+                    file.save(filePath)
+                    index = index + 1
+                    fileName = 'file%d' % index
+                    try:
+                        file = request.files[fileName]
+                        if file.filename == '':
+                            logger.error('file empty')
+                            raise Exception('选择文件！')
+                    except Exception, e:
+                        has_file = False
+            if index > 1:            
                 resp['success'] = True
                 resp['detail'] = '上传图片成功'
             else:
