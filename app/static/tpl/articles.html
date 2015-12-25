@@ -12,7 +12,7 @@
         {{ #articles }}
         <div class="article" article_id="{{ id }}">
             <p class="title"><a href="{{ url }}" >{{ title }}</a></p>
-            <p class="content">{{{ leading }}}</p>
+            <div class="content">{{{ leading }}}</div>
             <p class="info">{{ published }}{{ create_time }}&nbsp;|&nbsp;tags&nbsp;&nbsp;<em><a href="{{ group_url }}">{{ group }}</a></em>&nbsp;|&nbsp;{{ view_title }}&nbsp;({{ comments}})</p>
         </div>
         {{ /articles }}

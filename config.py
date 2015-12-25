@@ -4,7 +4,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 
-LEADING_LENGTH = 300
+LEADING_LENGTH = 1300
 
 SUBMIT_KEY = 'sun123'
 UPLOAD_FOLDER = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'app', 'static', 'imag')
@@ -17,7 +17,7 @@ BLOG_TITLE="diligent, explore, share"
 MENUS = [{"menu_title":u"首页", "menu_url":"/index"},
          {"menu_title":u"标签", "menu_url":"/tags"},
          {"menu_title":u"关于我", "menu_url":"/me"}]
-COPY_RIGHT = u"Copyright (c) 2015-2020 CodingLabs 本博客内容采用"
+COPY_RIGHT = u"Copyright (c) 2015-2015 CodingLabs 本博客内容采用"
 LICENSE=u"知识共享署名 3.0 中国大陆许可协议"
 PERMIT=u"进行许可"
 PUBLISHED=u"发表于"

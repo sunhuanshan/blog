@@ -6,6 +6,7 @@ body{
     background-image: url(imag/bg.gif);
     background-repeat: repeat;
     background-color: #FFFDFA;
+    text-align: center;
 }
 *{
     margin: 0;
@@ -14,7 +15,6 @@ a:hover {
     color: #00f;
 }
 #content{
-    height: auto;
 }
 #nav {
     margin: 0;
@@ -54,18 +54,22 @@ a:hover {
     clear : both;
 }
 #tag {
-    padding: 10px;
+    text-align: center;
     margin: 20px auto;
-    width: 1004px;
+    width: 960px;
     display: block;
     box-shadow: 0 0 10px #777;
+    border: 1px solid;
+    border-color: #ccc;
     border-radius: 5px;
-    background-color: #fff;
 }
 #tag span {
     display:inline-block;
-    margin: 5px 5px;
-    background-color: rgba(132, 134, 136, 0.65);;
+    margin: 10px 10px;
+    background-color: rgba(132, 134, 136, 0.65);
+    background-color: rgb(132, 134, 136);
+    border: 1px solid ;
+    border-color: #ccc;
     padding: 3px;
     border-radius: 3px;
 
@@ -88,35 +92,44 @@ a:hover {
     background-color: #ccc;
 }
 #articles {
-    width: 984px;
+    width: 960px;
     margin: 0 auto;
-    padding: 20px;
-    box-shadow: 0 0 10px #777;
-    border-radius: 5px;
-    background-color: #fff;
+    text-align: center;
 }
 #articles .article {
-    margin-top: 15px;
-    border-bottom: 1px dashed #C5C4C7;
-    padding-bottom: 5px;
+    width: 960px;
+    text-align: left;
+    margin-top: 35px;
+    box-shadow: 0 0 10px #777;
+    border: 1px solid;
+    border-color: #ccc;
+    border-radius: 5px;
 }
 #articles .title {
-    margin: 0 auto;
+    margin: 20 auto;
     font-size: 18px ;
     font-weight: bold;
     color: #222;
     text-align: center;
 }
 #articles .content {
-    margin-top: 10px;
+    margin: 10px 25px 20px 25px;
     font-size:15px;
     font-weight: normal;
-    color: #222;
+    color: #555;
+    line-height: 150%;
+}
+#articles img{
+    margin: 0 25px;
+    width: 340px;
+}
+#articles .p-img{
+    text-align: center;
 }
 #articles .info{
     font-size: 14px;
     text-align: right;
-    margin: 0;
+    margin: 0 20px 20px 20px;
 }
 #articles em{
     display: inline-block;
@@ -187,7 +200,7 @@ a:hover {
     margin-bottom: 30px;
 }
 #single_article .content{
-    font: 18px normal;
+    font: 15px normal;
     color:#333;
     line-height: 150%;
     margin-bottom: 30px;

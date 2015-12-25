@@ -5,6 +5,8 @@ from datetime import datetime
 import calendar
 from config import LEADING_LENGTH
 import re
+from logger import logger
+
 
 def getTimestamp():
     dt = datetime.utcnow()
@@ -35,9 +37,14 @@ def monthFromStamp(stamp):
 
 def creatLeading(content):
     length = len(content)
+    #获取第一张图片
     leading =''
+    pt = re.compile(r'<img.*?/>', re.I)
+    img_search = re.search(pt, content)
+    if img_search:
+        leading = '<p class="p-img">%s</p>'%img_search.group()
     if length > LEADING_LENGTH:
-        tmp_leading = content[:LEADING_LENGTH]
+        tmp_leading = content[: LEADING_LENGTH]
         #去掉所有<*>类型的字符串
         flag = False
         for char in tmp_leading:
