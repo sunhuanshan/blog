@@ -113,6 +113,7 @@ a:hover {
     text-align: center;
 }
 #articles .content {
+    text-align: left;
     margin: 10px 25px 20px 25px;
     font-size:15px;
     font-weight: normal;
