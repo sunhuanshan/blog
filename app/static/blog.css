@@ -86,6 +86,15 @@ a:hover {
 #tag em{
     font-style: normal;
     color: rgb(74, 74, 236);
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    margin-left: 5px;
+    padding-left: 5px;
+    color: #333;
+    font-weight: bold;
+    display: inline-block;
 }
 #tag span:active {
     background-color: #ccc;

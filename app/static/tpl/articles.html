@@ -1,7 +1,7 @@
 {{ #tags_data }}
     <div id="tag">
         {{ #tags }}
-            <span><a href="{{ url }}">{{ name }}<em>&nbsp;|&nbsp;x{{ count }}</em></a></span>
+            <span><a href="{{ url }}">{{ name }}<em class="tag-count">{{ count }}</em></a></span>
         {{ /tags }}
     </div>
 {{ /tags_data }}
