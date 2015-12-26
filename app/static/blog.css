@@ -1,8 +1,7 @@
 body{
-    width: 100%;
     margin: 0;
     font-family: verdana,arial,helvetica,sans-serif;
-    overflow-x:hidden;
+    overflow-x:auto;
     background-image: url(imag/bg.gif);
     background-repeat: repeat;
     background-color: #FFFDFA;
@@ -54,7 +53,7 @@ a:hover {
     clear : both;
 }
 #tag {
-    text-align: center;
+    text-align: left;
     margin: 20px auto;
     width: 960px;
     display: block;
@@ -207,6 +206,7 @@ a:hover {
     line-height: 150%;
     margin-bottom: 30px;
     padding-bottom: 40px;
+    text-align: left;
 }
 #single_article .prettyprint {
     word-wrap: break-word;
