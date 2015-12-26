@@ -1,6 +1,6 @@
 <div id="review">
     {{ #review_box }}
-    <div id="review_box" class="hide">
+    <div id="review_box">
         <p class="close"><a href="javascript:void(0)">x</a></p>
         <p><span>{{ email_title }}</span><input type="text" class = "email" name="email"/></p>
         <p><span>{{ name_title }}</span><input type="text" class="name" name="name"/></p>
@@ -11,7 +11,7 @@
     {{ #input_review }}
     <div class="input-review">
           <p class="title">{{ review_title }}</p>
-          <textarea id="input_area" cols="125" rows="5" >{{ review_box_title }}</textarea>
+          <textarea id="input_area" cols="75" rows="5" >{{ review_box_title }}</textarea>
           <p><a class="commit-btn" href="javascript:void(0)">{{ submit }}</a></p>
     </div>
     {{ /input_review }}
