@@ -126,7 +126,7 @@ $(document).ready(function() {
                 load_count ++;
                 var param = {"id": load_count};
                 var url = "/page";
-                var ele = $('.article[article_id="' + 10*(load_count-1) +'"]');
+                var ele = $('.article:last');
                 render_append(param, url, ele);
             } 
         }
