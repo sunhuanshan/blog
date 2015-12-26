@@ -112,10 +112,7 @@ $(document).ready(function() {
     $(document).scroll(function(){
         var articles = $('.article');
         if(articles.length > 5) {
-            if(back_sign_top == 0){
-                back_sign_top = $('.article[article_id="5"]').offset().top;
-            }
-            if($(document).scrollTop() > back_sign_top) {
+            if($(document).scrollTop() > 2000) {
                 $('#back-top').removeClass('hide');
             } else {
                 $('#back-top').addClass('hide');
