@@ -1,10 +1,9 @@
 body{
     margin: 0;
-    font-family: verdana,arial,helvetica,sans-serif;
+    font-family: "Hiragino Sans GB","Microsoft YaHei","微软雅黑",tahoma,arial,simsun,"宋体";
     overflow-x:auto;
-    background-image: url(imag/bg.gif);
+    background-color: #ededef;
     background-repeat: repeat;
-    background-color: #FFFDFA;
     text-align: center;
 }
 *{
@@ -14,26 +13,29 @@ a:hover {
     color: #00f;
 }
 #content{
+
 }
 #nav {
     margin: 0;
     width:100%;
-    height: 70px;
-    background-color: #2A3440;
+    height: 90px;
+    background: url(imag/body.png?022) repeat-x;
+    text-align: center;
 }
 #nav .title {
-    font: bold 30px Verdana;
-    color: #C5C4C7;
-    margin: 0 auto;
+    font-weight: bold;
+    font-size: 30px;
+    color: #fff;
     padding-top: 10px;
-    width: 1024px;
+    width: 960px;
     text-align: left;
+    margin: 0 auto;
 }
 #nav .menu {
-    width: 1024px;
-    margin: 0 auto;
+    width: 960px;
     height: 20px;
     text-align: right;
+    margin: 5px auto;
 }
 #nav a {
     text-decoration: none;
@@ -61,6 +63,8 @@ a:hover {
     border: 1px solid;
     border-color: #ccc;
     border-radius: 5px;
+    background: url(imag/bg.gif) repeat;
+
 }
 #tag span {
     display:inline-block;
@@ -74,7 +78,6 @@ a:hover {
 
 }
 #tag a{
-    font-family: verdana, arial, helvetica, sans-serif;
     font-size: 15px;
     line-height: 150%;
     text-decoration: none;
@@ -103,6 +106,7 @@ a:hover {
     border: 1px solid;
     border-color: #ccc;
     border-radius: 5px;
+    background: url(imag/bg.gif) repeat;
 }
 #articles .title {
     margin: 20 auto;
@@ -213,7 +217,6 @@ a:hover {
     margin: 20px;
     background-color: #DCDAE4;
     box-shadow: 0 0 10px #3C3939;
-    font-family: Calibri;
     font-size: 14px;
     padding-left: 5px;
     color: #222;
@@ -418,18 +421,18 @@ a:hover {
     position: fixed;
     right: 50px;
     bottom: 80px;
-
 }
 #back-top .arrow {
     display: block;
-    width: 50px;
-    height: 50px;
-    background-color: #f7f7f7;
-    border: 1px solid #00f;
+    width: 20px;
+    height: 40px;
+    background: url(imag/back-top.png) no-repeat 0 0;
     font-size: 16px;
     line-height: 300%;
     font-weight: bold;
-    text-decoration: none;
+}
+#back-top .arrow:hover{
+    background-position: -50 0;
 }
 
 #back-top span {
