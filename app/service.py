@@ -36,7 +36,7 @@ class ArticleService():
                 index = 0
                 for art in articles:
                     index += 1
-                    if (index >= start) and (index < start+limit):
+                    if (index >= start) and (index <= start+limit):
                         jart = JArticle(art, False)
                         jarticles.append(jart._to_json())
             else:
