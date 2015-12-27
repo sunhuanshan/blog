@@ -221,6 +221,9 @@ a:hover {
     padding-bottom: 40px;
     text-align: left;
 }
+#single_article .content p{
+    text-indent:2em;
+}
 #single_article xmp{
     display: block;
     margin: 10px 0;
