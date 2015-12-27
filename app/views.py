@@ -341,6 +341,7 @@ def loadImage():
             while has_file:    
                 if allowed_file(file.filename):
                     filename = secure_filename(file.filename)
+                    logger.error(filename)
                     filePath = os.path.join(UPLOAD_FOLDER, filename)
                     file.save(filePath)
                     index = index + 1
