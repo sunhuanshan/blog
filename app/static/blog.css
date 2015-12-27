@@ -221,6 +221,16 @@ a:hover {
     padding-bottom: 40px;
     text-align: left;
 }
+#single_article xmp{
+    display: block;
+    margin: 10px 0;
+    padding: 5px;
+    font-size: 12px;
+    line-height: 120%;
+    font-family: cursive;
+    background-color: #fff;
+    background: url(imag/bg.gif);
+}
 #single_article .prettyprint {
     word-wrap: break-word;
     margin: 20px;
