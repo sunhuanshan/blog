@@ -106,29 +106,31 @@ $(document).ready(function() {
         input_review.data('answer', reviewer)
         input_review.focus();
     });
-    var load_count = 1;
-    var back_sign_top = 0;
-    var load_top = 0;
-    $(document).scroll(function(){
-        var articles = $('.article');
-        if(articles.length > 5) {
-            if($(document).scrollTop() > 2000) {
-                $('#back-top').removeClass('hide');
-            } else {
-                $('#back-top').addClass('hide');
+    if(location.pathname == '' || location.pathname == '/' || location.pathname == '/index'){
+        var load_count = 1;
+        var back_sign_top = 0;
+        var load_top = 0;
+        $(document).scroll(function(){
+            var articles = $('.article');
+            if(articles.length > 5) {
+                if($(document).scrollTop() > 2000) {
+                    $('#back-top').removeClass('hide');
+                } else {
+                    $('#back-top').addClass('hide');
+                }
             }
-        }
-        if(articles.length >= 10 * load_count) {
-            if(load_top == 0){
-                load_top = $('#footer').offset().top;
+            if(articles.length >= 10 * load_count) {
+                if(load_top == 0){
+                    load_top = $('#footer').offset().top;
+                }
+                if($(document).scrollTop() > load_top-1000) {
+                    load_count ++;
+                    var param = {"id": load_count};
+                    var url = "/page";
+                    var ele = $('.article:last');
+                    render_append(param, url, ele);
+                } 
             }
-            if($(document).scrollTop() > load_top-1000) {
-                load_count ++;
-                var param = {"id": load_count};
-                var url = "/page";
-                var ele = $('.article:last');
-                render_append(param, url, ele);
-            } 
-        }
-    });
+        });
+    }
 });
