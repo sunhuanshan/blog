@@ -214,7 +214,7 @@ a:hover {
     margin-bottom: 30px;
 }
 #single_article .content{
-    font: 15px normal;
+    font-size: 15px;
     color:#333;
     line-height: 150%;
     margin-bottom: 30px;
