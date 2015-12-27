@@ -72,6 +72,7 @@ def getContentData():
 
 def getArticlesData(page=1):
     data = {}
+    data['articles_data'] = False
     atService = ArticleService()
     arts = atService.getArticlesByPage((page-1)*10, 10)
     if len(arts) > 0:

@@ -44,7 +44,8 @@ def page():
         #渲染articles
         html =''
         articles_data = render.getArticlesData(page_id)
-        html = '%s%s' % (html, render.myRender('static/tpl/articles.html', articles_data))
+        if articles_data['articles_data']:
+            html = '%s%s' % (html, render.myRender('static/tpl/articles.html', articles_data))
         resp['success'] = True
         resp['html'] = html
     except Exception, e:
