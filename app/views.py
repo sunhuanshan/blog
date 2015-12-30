@@ -73,6 +73,14 @@ def article():
     html = '%s%s' % (html, render.myRender('static/tpl/template_footer.html', footer_data))
     return html
 
+#输出原样的html文本
+@app.route('/origin', methods = ['GET'])
+def origin():
+    resp = {}
+    at_id = int(request.args['id'])
+    articles_data = artService.getArticleById(at_id);
+    return articles_data['content']
+
 @app.route('/addReview', methods=['GET'])
 def addReview():
     resp = {}

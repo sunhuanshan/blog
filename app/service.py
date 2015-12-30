@@ -102,7 +102,7 @@ class ArticleService():
                 group = self.groupDao.getGroupByName(groupName)
                 if group:
                     article.group = group.id
-                    self.groupDao.addGroupCount(group.id)
+                    #self.groupDao.addGroupCount(group.id)
                 else:
                     group = Group()
                     group.name = groupName 
